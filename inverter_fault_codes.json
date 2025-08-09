@@ -1,0 +1,606 @@
+[
+  {
+    "Fault Code":"AFE F1",
+    "Description":"AFE F1 Over Current Fault Description: Drive has detected a high current in the output phase. Possible cause and solution: Sudden increase in load Check load. Short circuit in cables Check cables."
+  },
+  {
+    "Fault Code":"AFE F2",
+    "Description":"AFE F2 Over Voltage Fault Description: DC\u2212link voltage has exceeded the drive protection limits S1 = Hardware trip. Unit DC Voltage above 911VDC. Possible cause and solution: Power is sent back into the drive from load."
+  },
+  {
+    "Fault Code":"AFE F3",
+    "Description":"AFE F3 Earth fault Description: Earth fault protection ensures that the sum of the phase currents is zero. S1 = Sum of output phase currents is not zero. Possible cause and solution: Insulation failure in cables. Verify the unit is grounded properly."
+  },
+  {
+    "Fault Code":"AFE F5",
+    "Description":"AFE F5 Charge Switch Description: Charge switch status is not correct when start command is given. S1 = Charge switch was open when the start command was given. Possible cause and solution: Charge switch was open when the start command was given. Check connection of the feedback from the charging relay. Reset the fault and restart."
+  },
+  {
+    "Fault Code":"AFE F7",
+    "Description":"AFE F7 Saturation Fault Description: The F7 saturation fault is looking at the voltage from the collector to the emitter of the IGBT when the device is turned on. If the drive monitors greater than 7VDC when the device is on it sees this as too great of a voltage for the IGBT to be working properly. This fault is only active on the FR4\u22129 frame sizes. There are a few things that can cause this trip. IGBT did not turn on due to defective firing circuit or IGBT Monitoring circuitry is not monitoring the voltage correctly giving false trips A short on the output of the drive can make the IGBT the highest impedance load Poor grounding can cause noise that will trip the drive S1 = Hardware failure Possible cause and solution: Switch off power DO NOT RE\u2212CONNECT POWER. Contact distributor."
+  },
+  {
+    "Fault Code":"AFE F8",
+    "Description":"AFE F8 System Fault Description: A system fault indicates several different fault situations in drive operation. It is important to get the subcode from the keypad on this fault. S1 = Reserved Disturbance. Rest the unit and try again. Driver board or IGBT is broken. S2 = Reserved S3 = Reserved S4 = Reserved S5 = Reserved S6 = Reserved S7 = Reserved S8 = No power to driver card S9 = Power unit communication (Tx) S10 = Power unit communication (Trip) S11 = Power unit comm. (Measurement) S12 = SystemBus synchronization has failed in DriveSynch Operation S30 = Safe disable inputs are in different state (OPT\u2212AF) S31 = Thermistor short circuit detected (OPT\u2212AF) S32 = OPT\u2212AF board has been removed S33 = OPT\u2212AF board EEPROM error Possible cause and solution: Call distributor"
+  },
+  {
+    "Fault Code":"AFE F9",
+    "Description":"AFE F9 Undervoltage Fault Description: DC\u2212link voltage is below the fault voltage limit of the drive. S1 = DC\u2212link too low during run. S2 = No data from power unit S3 = Undervoltage control supervision Possible cause and solution: Too low a supply voltage. Measure supply voltage. Check breakers and fuses. Drive internal fault."
+  },
+  {
+    "Fault Code":"AFE F10",
+    "Description":"AFE F10 Line Synchronization Fault Description: The IGBTs cannot sync to the generator\u2019s sine waves. S1 = Phase supervision diode supply. S2 = Phase supervision active front end. Possible cause and solution: Input line phase is missing. Check supply voltage, fuses, and cable."
+  },
+  {
+    "Fault Code":"AFE F11",
+    "Description":"AFE F11 Line Phase supervision Description: Current measurement has detected that there is no current in one phase or one phase current is considerably different from other phases. Possible cause and solution: Check cables."
+  },
+  {
+    "Fault Code":"AFE F13",
+    "Description":"AFE F13 Drive Under Temperature Fault Description: Heatsink temperature is under 10\u00b0C."
+  },
+  {
+    "Fault Code":"AFE F14",
+    "Description":"AFE F14 Drive Over Temperature Fault Description: The heat sink on the drive is measured at 89\u02daC or Higher. Possible cause and solution: Lower Load and Increase Airflow. Check heatsink for dust. Check the ambient temperature."
+  },
+  {
+    "Fault Code":"AFE F22",
+    "Description":"AFE F22 EEPROM Checksum Fault Description: Possible cause and solution: Parameter save fault. Faulty operation. Component failure. Contact distributor."
+  },
+  {
+    "Fault Code":"AFE F24",
+    "Description":"AFE F24 Counter Fault Description: Values displayed on counters are incorrect. Possible cause and solution: Values displayed on counters are incorrect. Have a critical attitude towards values shown on counters. Contact distributor."
+  },
+  {
+    "Fault Code":"AFE F25",
+    "Description":"AFE F25 Microprocessor Watchdog Fault Description: Error in loading application. Possible cause and solution: Start\u2212up of the drive has been prevented. Run request is ON when a new application is loaded to the drive. Reset the fault and restart. Contact distributor."
+  },
+  {
+    "Fault Code":"AFE F26",
+    "Description":"AFE F26 Start-Up Prevention Description: Error in loading application. Possible cause and solution: Start\u2212up of the drive has been prevented. Run request is ON when a new application is loaded to the drive. Cancel prevention of start\u2212up if this can be done safely. Remove Run Request. Contact distributor."
+  },
+  {
+    "Fault Code":"AFE F29",
+    "Description":"AFE F29 Thermistor Fault Description: The thermistor input of the option board has detected too high a motor temperature. Possible cause and solution: Load is over heated. Thermistor cable is broken. Check load. Contact distributor."
+  },
+  {
+    "Fault Code":"AFE F31",
+    "Description":"AFE F31 IGBT Temperature Description: IGBT Inverter Bridge over temperature protection has detected too high a short\u2212term overload current. Treat as over current. Possible cause and solution: Sudden increase in load Check load. Short circuit in cables Check cables."
+  },
+  {
+    "Fault Code":"AFE F32",
+    "Description":"AFE F32 Fan Cooling Description: Possible cause and solution: Cooling fan of the frequency converter does not start when ON command is given."
+  },
+  {
+    "Fault Code":"AFE F37",
+    "Description":"AFE F37 Device Change Description: Option board or power unit changed. Possible cause and solution: New device of same type and rating. Reset fault and start again."
+  },
+  {
+    "Fault Code":"AFE F38",
+    "Description":"AFE F38 Device Added Description: Option board added. Possible cause and solution: New device of same type and rating. Reset fault and start again."
+  },
+  {
+    "Fault Code":"AFE F39",
+    "Description":"AFE F39 Device Removed Description: Option board removed. Possible cause and solution: New device of same type and rating. Reset fault and start again."
+  },
+  {
+    "Fault Code":"AFE F40",
+    "Description":"AFE F40 Device Unknown Description: Unknown option board or drive. S1 = Unknown Device. S2 = Power1 not same type as Power2. Possible cause and solution: Contact distributor."
+  },
+  {
+    "Fault Code":"AFE F41",
+    "Description":"AFE F41 IGBT Temperature Description: IGBT Inverter Bridge over temperature protection has detected too high a short\u2212term overload current. Possible cause and solution: Sudden increase in load Check load. Short circuit in cables Check cables."
+  },
+  {
+    "Fault Code":"AFE F44",
+    "Description":"AFE F44 Device Changed (Default Param.) Description: Option board or power unit changed. New device of different type or different rating from the previous one Possible cause and solution: 1.  Reset Fault."
+  },
+  {
+    "Fault Code":"AFE F45",
+    "Description":"AFE F45 Device Added (Default Param.) Description: Option board or power unit changed. New device of different type or different rating from the previous one Possible cause and solution: 1.  Reset Fault."
+  },
+  {
+    "Fault Code":"AFE F50",
+    "Description":"AFE F50 4mA Supervision Description: Analog Signal reading issue. Possible cause and solution: 1.  Current at the analogue input is below 4mA. Check wiring."
+  },
+  {
+    "Fault Code":"AFE F51",
+    "Description":"AFE F51 External Fault Description: Digital input fault. Possible cause and solution: 1. Ensure E\u2212stop is out. Check E\u2212stop wiring."
+  },
+  {
+    "Fault Code":"AFE F52",
+    "Description":"AFE F52 Keypad Communication Description: Keypad is removed from drive. Possible cause and solution: The connection between the control keypad or NCDrive and the AC drive is broken. Check keypad connection\/cable."
+  },
+  {
+    "Fault Code":"AFE F53",
+    "Description":"AFE F53 Fieldbus Communication Description: The data connection between the HMI and drive is broken. The Possible cause and solution: Reset fault. Verify power is on to the drive and ethernet switch. Verify that the IP address in the drive has not been changed."
+  },
+  {
+    "Fault Code":"AFE F54",
+    "Description":"AFE F54 Slot Fault Description: Defective option board or slot. Drive has lost connection to a option card installed in control module. Possible cause and solution: Check options cards in drive are installed correctly. Do not remove card while drive is powered up."
+  },
+  {
+    "Fault Code":"AFE F55",
+    "Description":"AFE F55 Input Switch Description: Digital input monitoring indicates that DC or AC input switch is open. Possible cause and solution: Verify wiring."
+  },
+  {
+    "Fault Code":"AFE F56",
+    "Description":"AFE F56 PT100 Temperature Fault Description: Temperature protection function is used to measure temperature and give warning and\/or fault when set limits are exceeded. AFEII application supports two temperature sensor boards simultaneously. A1 = Temperature limit has been exceeded. A2 = Sensor not wired or not working. A3 = Short circuit. Possible cause and solution: Temperature limit values set for the temperature board parameters have been exceeded. Check wiring."
+  },
+  {
+    "Fault Code":"AFE F60",
+    "Description":"AFE F60 Cooling Description: Protection for the liquid\u2212cooled units. An external sensor is connected to the drive (DI: Cooling Monitor) to indicate if cooling liquid is circulating. If the drive is in Stop state only a warning is issued. In Run state a fault is issued, and the drive makes a coast stop. Possible cause and solution: Liquid cooled drive cooling circulation have been failed."
+  },
+  {
+    "Fault Code":"AFE F62",
+    "Description":"AFE F62 Run Disable Description: Run Disable warning signal is issued when Run Enable signal has been removed from the IO."
+  },
+  {
+    "Fault Code":"AFE F64",
+    "Description":"AFE F64 MCB State Fault Description: A1: Code given by V002 and older versions. A2: MCB open, while command is to close. A3: MCB closed, while command is to open. A4: MCB opened externally while AFE unit was in run state. A5: MCB Trip state, Digital input from the MCB Possible cause and solution: MCB has opened while drive controls it to close. MCB is closed while drive controls it open. MCB is opening while AFE unit is in Run state."
+  },
+  {
+    "Fault Code":"AFE F65",
+    "Description":"AFE F65 PT100 Board 2 Description: Temperature protection function is used to measure temperature and give warning and\/or fault when set limits are exceeded. AFEII application supports two temperature sensor boards simultaneously. A1: Temperature limit has been exceeded. A2: Sensor not wired or not working. A3: Short circuit. Possible cause and solution: 1. Temperature limit values set for the temperature board parameters have been exceeded. Check Wiring."
+  },
+  {
+    "Fault Code":"AFE F66",
+    "Description":"AFE F66 Klixon Description: Klixon type temperature sensor has exceeded the triggering limit. Possible cause and solution: Check reason for temperature trip where Klixon sensor is located."
+  },
+  {
+    "Fault Code":"AFE F67",
+    "Description":"AFE F67 Fieldbus communication Slot E Description: Loss of communication to the OPTE9 card. Slot E is the 5th slot in the drive (Furthest to the right). Possible cause and solution: Reset fault. If the fault is persistent, try a new OPTE9 card. This must be configured based on each drive."
+  },
+  {
+    "Fault Code":"AFE F70",
+    "Description":"AFE F70 LCL Fan Fault Description: Digital input connected to LCL indicates fan fault."
+  },
+  {
+    "Fault Code":"AFE F71",
+    "Description":"AFE F71 LCL Temperature Description: LCL Temperature has reached warning limit."
+  },
+  {
+    "Fault Code":"AFE F72",
+    "Description":"AFE F72 Enter License Code Description: A license must be generated at Spoc for the dc\u2212dc and grid inverter application to run. If the code is wrong the drive will show this fault when it tries to start. Possible cause and solution: The license code should be on a sticker behind the keypad of the drive. Enter it into the license code. Call Spoc."
+  },
+  {
+    "Fault Code":"AFE F80",
+    "Description":"AFE F80 Charging Fault Description: The drive has not reached DC voltage at set time to MCB. Drive pre\u2212charge issue. Possible cause and solution: Charging circuit not operational. High load in DC link. Low voltage in supply for charging circuit."
+  },
+  {
+    "Fault Code":"AFE F81",
+    "Description":"AFE F81 Main Fuse Description: Digital input fault. Possible cause and solution: Remove the fault situation from the external device."
+  },
+  {
+    "Fault Code":"AFE F82",
+    "Description":"AFE F82 External Fault 2 Description: Digital input fault. Possible cause and solution: Verify E\u2212stop is pulled out. Check Wiring."
+  },
+  {
+    "Fault Code":"AFE F83",
+    "Description":"AFE F83 Safe Stop Description: Digital input fault. Possible cause and solution: 1.  Remove fault situation from external device."
+  },
+  {
+    "Fault Code":"AFE F84",
+    "Description":"AFE F84 Insulation Description: Digital input fault. Possible cause and solution: 1.  Remove fault situation from external device."
+  },
+  {
+    "Fault Code":"AFE F85",
+    "Description":"AFE F85 Earth Switch fault Description: Digital input fault. Possible cause and solution: 1.  Remove fault situation from external device."
+  },
+  {
+    "Fault Code":"AFE F86",
+    "Description":"AFE F86 Arc Relay Description: Digital input fault. Possible cause and solution: 1.  Remove fault situation from external device."
+  },
+  {
+    "Fault Code":"AFE F88",
+    "Description":"AFE F88 High Amb Temperature Description: Digital input fault. Possible cause and solution: 1.  Remove fault situation from external device."
+  },
+  {
+    "Fault Code":"AFE F89",
+    "Description":"AFE F89 Leakage fault Description: Digital input fault. Possible cause and solution: Remove fault situation from external device."
+  },
+  {
+    "Fault Code":"AFE F92",
+    "Description":"AFE F92 Supply Voltage Description: Supply voltage is not inside of set limits. Possible cause and solution: Verify breakers are closed. Verify fuses. Ensure generator voltage (480VAC)."
+  },
+  {
+    "Fault Code":"AFE F94",
+    "Description":"AFE F94 External Fault 2 Description: Digital input fault. Possible cause and solution: Verify E\u2212stop is pulled out. Check Wiring."
+  },
+  {
+    "Fault Code":"AFE F95",
+    "Description":"AFE F95 Line THD Description: Line THD is too high."
+  },
+  {
+    "Fault Code":"AFE F96",
+    "Description":"AFE F96 Line HF Voltage Description: Line HF Voltage is too high. DC\u2212DC Drive Faults"
+  },
+  {
+    "Fault Code":"DC-DC F1",
+    "Description":"DC-DC F1 Over Current Fault Description: Drive has detected a high current in the output phase. Possible cause and solution: Sudden increase in load Check load. Short circuit in cables Check cables."
+  },
+  {
+    "Fault Code":"DC-DC F2",
+    "Description":"DC-DC F2 Over Voltage Fault Description: DC\u2212link voltage has exceeded the drive protection limits S1 = Hardware trip. Unit DC Voltage above 911VDC. Possible cause and solution: Too short a deceleration time. High overvoltage spikes in supply. Power is sent back into the drive from load."
+  },
+  {
+    "Fault Code":"DC-DC F3",
+    "Description":"DC-DC F3 Earth fault Description: Earth fault protection ensures that the sum of the phase currents is zero. S1 = Sum of output phase currents is not zero. Possible cause and solution: Insulation failure in cables. Verify the unit is grounded properly."
+  },
+  {
+    "Fault Code":"DC-DC F5",
+    "Description":"DC-DC F5 Charge Switch Description: Charge switch status is not correct when start command is given. S1 = Charge switch was open when the start command was given. Possible cause and solution: Check connection of the feedback from the charging relay. Reset the fault and restart."
+  },
+  {
+    "Fault Code":"DC-DC F7",
+    "Description":"DC-DC F7 Saturation Fault Description: The F7 saturation fault is looking at the voltage from the collector to the emitter of the IGBT when the device is turned on. If the drive monitors greater than 7VDC when the device is on it sees this as too great of a voltage for the IGBT to be working properly. This fault is only active on the FR4\u22129 frame sizes. There are a few things that can cause this trip. IGBT did not turn on due to defective firing circuit or IGBT Monitoring circuitry is not monitoring the voltage correctly giving false trips A short on the output of the drive can make the IGBT the highest impedance load Poor grounding can cause noise that will trip the drive S1 = Hardware failure Possible cause and solution: Turn off power and do NOT reconnect Power."
+  },
+  {
+    "Fault Code":"DC-DC F8",
+    "Description":"DC-DC F8 System Fault Description: A system fault indicates several different fault situations in drive operation. It is important to get the subcode from the keypad on this fault. S1 = Reserved Disturbance. Rest the unit and try again. Driver board or IGBT is broken. S2 = Reserved S3 = Reserved S4 = Reserved S5 = Reserved S6 = Reserved S7 = Charge Switch S8 = No power to driver card S9 = Power unit communication (Tx) S10 = Power unit communication (Trip) S11 = Power unit comm. (Measurement) S12 = SystemBus synchronization has failed in DriveSynch Operation S30 = Safe disable inputs are in different state (OPT\u2212AF) S31 = Thermistor short circuit detected (OPT\u2212AF) S32 = OPT\u2212AF board has been removed S33 = OPT\u2212AF board EEPROM error Possible cause and solution: Call distributor"
+  },
+  {
+    "Fault Code":"DC-DC F9",
+    "Description":"DC-DC F9 Undervoltage Fault Description: DC\u2212link voltage is below the fault voltage limit of the drive. S1 = DC\u2212link too low during run. S2 = No data from the power unit. S3 = Undervoltage control supervision. Possible cause and solution: Too low a supply voltage. Measure supply voltage. Check breakers and fuses. Drive internal fault."
+  },
+  {
+    "Fault Code":"DC-DC F10",
+    "Description":"DC-DC F10 Line Synchronization Fault Description: Can not sync to source. S1 = Phase supervision diode supply. S2 = Phase supervision active front end. Possible cause and solution: Input line phase is missing. Check supply voltage, fuses, and cable."
+  },
+  {
+    "Fault Code":"DC-DC F11",
+    "Description":"DC-DC F11 Line Phase supervision Description: Current measurement has detected that there is no current in one phase or one phase current is considerably different from other phases. Possible cause and solution: 1.  Check cables."
+  },
+  {
+    "Fault Code":"DC-DC F13",
+    "Description":"DC-DC F13 Drive Under Temperature Fault Description: Heatsink temperature is under \u221210\u00b0C."
+  },
+  {
+    "Fault Code":"AFE F14",
+    "Description":"AFE F14 Drive Over Temperature Fault Description: The heat sink on the drive is measured at 89\u02daC or Higher. Possible cause and solution: Lower Load and Increase Airflow. Check heatsink for dust. Check the ambient temperature."
+  },
+  {
+    "Fault Code":"DC-DC F22",
+    "Description":"DC-DC F22 EEPROM Checksum Fault Description: Possible cause and solution: Parameter save fault. Faulty operation. Component failure. Contact distributor."
+  },
+  {
+    "Fault Code":"DC-DC F24",
+    "Description":"DC-DC F24 Counter Fault Description: Values displayed on counters are incorrect. Possible cause and solution: Values displayed on counters are incorrect. Have a critical attitude towards values shown on counters. Contact distributor."
+  },
+  {
+    "Fault Code":"DC-DC F25",
+    "Description":"DC-DC F25 Microprocessor Watchdog Fault Description: Error in loading application. Possible cause and solution: Start\u2212up of the drive has been prevented. Run request is ON when a new application is loaded to the drive. Reset the fault and restart. Contact distributor."
+  },
+  {
+    "Fault Code":"DC-DC F26",
+    "Description":"DC-DC F26 Start-Up Prevention Description: Error in loading application. Possible cause and solution: Start\u2212up of the drive has been prevented. Run request is ON when a new application is loaded to the drive. Cancel prevention of start\u2212up if this can be done safely. Remove Run Request. Contact distributor."
+  },
+  {
+    "Fault Code":"DC-DC F29",
+    "Description":"DC-DC F29 Thermistor Fault Description: The thermistor input of the option board has detected too high a motor temperature. Possible cause and solution: Load is over heated. Thermistor cable is broken. Check load. Contact distributor."
+  },
+  {
+    "Fault Code":"DC-DC F31",
+    "Description":"DC-DC F31 IGBT Temperature Description: IGBT Inverter Bridge over temperature protection has detected too high a short\u2212term overload current. Treat as over current. Possible cause and solution: Sudden increase in load Check load. Short circuit in cables Check cables."
+  },
+  {
+    "Fault Code":"DC-DC F32",
+    "Description":"DC-DC F32 Fan Cooling Description: Possible cause and solution: Cooling fan of the frequency converter does not start when ON command is given."
+  },
+  {
+    "Fault Code":"DC-DC F37",
+    "Description":"DC-DC F37 Device Change Description: Option board or power unit changed. Possible cause and solution: New device of same type and rating. Reset fault and start again."
+  },
+  {
+    "Fault Code":"DC-DC F38",
+    "Description":"DC-DC F38 Device Added Description: Option board added. Possible cause and solution: New device of same type and rating. Reset fault and start again."
+  },
+  {
+    "Fault Code":"DC-DC F39",
+    "Description":"DC-DC F39 Device Removed Description: Option board removed. Possible cause and solution: New device of same type and rating. Reset fault and start again."
+  },
+  {
+    "Fault Code":"DC-DC F40",
+    "Description":"DC-DC F40 Device Unknown Description: Unknown option board or drive. S1 = Unknown Device. S2 = Power1 not same type as Power2. Possible cause and solution: Contact distributor."
+  },
+  {
+    "Fault Code":"DC-DC F41",
+    "Description":"DC-DC F41 IGBT Temperature Description: IGBT Inverter Bridge over temperature protection has detected too high a short\u2212term overload current. Possible cause and solution: Sudden increase in load Check load. Short circuit in cables Check cables."
+  },
+  {
+    "Fault Code":"DC-DC F44",
+    "Description":"DC-DC F44 Device Changed (Default Param.) Description: Option board or power unit changed. New device of different type or different rating from the previous one Possible cause and solution: 1.  Reset Fault."
+  },
+  {
+    "Fault Code":"DC-DC F45",
+    "Description":"DC-DC F45 Device Added (Default Param.) Description: Option board or power unit changed. New device of different type or different rating from the previous one Possible cause and solution: 1.  Reset Fault."
+  },
+  {
+    "Fault Code":"DC-DC F50",
+    "Description":"DC-DC F50 4mA Supervision Description: Analog Signal reading issue. Possible cause and solution: 1.  Current at the analogue input is below 4mA. Check wiring."
+  },
+  {
+    "Fault Code":"DC-DC F51",
+    "Description":"DC-DC F51 External Fault Description: Digital input fault. Possible cause and solution: 1. Ensure E\u2212stop is out. Check E\u2212stop wiring."
+  },
+  {
+    "Fault Code":"DC-DC F52",
+    "Description":"DC-DC F52 Keypad Communication Description: Keypad is removed from drive. Possible cause and solution: The connection between the control keypad or NCDrive and the AC drive is broken. Check keypad connection\/cable."
+  },
+  {
+    "Fault Code":"DC-DC F53",
+    "Description":"DC-DC F53 Fieldbus Communication Description: The data connection between the HMI and drive is broken. Possible cause and solution: Reset fault. Verify power is on to the drive and ethernet switch. Verify that the IP address in the drive has not been changed."
+  },
+  {
+    "Fault Code":"DC-DC F54",
+    "Description":"DC-DC F54 Slot Fault Description: Defective option board or slot. Drive has lost connection to a option card installed in control module. Possible cause and solution: Check options cards in drive are installed correctly. Do not remove card while drive is powered up."
+  },
+  {
+    "Fault Code":"DC-DC F55",
+    "Description":"DC-DC F55 Input Switch Description: Digital input monitoring indicates that DC or AC input switch is open. Possible cause and solution: Verify wiring."
+  },
+  {
+    "Fault Code":"DC-DC F56",
+    "Description":"DC-DC F56 PT100 Temperature Fault Description: Temperature protection function is used to measure temperature and give warning and\/or fault when set limits are exceeded. AFEII application supports two temperature sensor boards simultaneously. A1 = Temperature limit has been exceeded. A2 = Sensor not wired or not working. A3 = Short circuit. Possible cause and solution: Temperature limit values set for the temperature board parameters have been exceeded. Check wiring."
+  },
+  {
+    "Fault Code":"DC-DC F59",
+    "Description":"DC-DC F59 SB Heart Beat (SystemBus communication) Description: The master drive sends pulses to all follower drives. If the pulses are missing a system bus communication fault is generated. The master drive also receives pulses back from the follower drives (max. four drives) and generates warnings if pulses are missing. SystemBus communication is broken between master and follower. Correcting measures: Check expander board parameters. Check optical fiber. Check option board jumpers."
+  },
+  {
+    "Fault Code":"DC-DC F60",
+    "Description":"DC-DC F60 Cooling Description: Protection for the liquid\u2212cooled units. An external sensor is connected to the drive (DI: Cooling Monitor) to indicate if cooling liquid is circulating. If the drive is in Stop state only a warning is issued. In Run state a fault is issued, and the drive makes a coast stop. Possible cause and solution: Liquid cooled drive cooling circulation have been failed."
+  },
+  {
+    "Fault Code":"DC-DC F61",
+    "Description":"DC-DC F61 Reference Error Description: Actual current is not within current reference hysteresis. See parameter group G2.10.6 Reference Error."
+  },
+  {
+    "Fault Code":"DC-DC F62",
+    "Description":"DC-DC F62 Run Disable Description: Run Disable warning signal is issued when Run Enable signal has been removed from the IO."
+  },
+  {
+    "Fault Code":"DC-DC F63",
+    "Description":"DC-DC F63 Quick stop Description: A command has been given from a digital input or the fieldbus to make a quick stop."
+  },
+  {
+    "Fault Code":"DC-DC F65",
+    "Description":"DC-DC F65 PT100 Board 2 Description: Temperature protection function is used to measure temperature and give warning and\/or fault when set limits are exceeded. AFEII application supports two temperature sensor boards simultaneously. A1: Temperature limit has been exceeded. A2: Sensor not wired or not working. A3: Short circuit. Possible cause and solution: Temperature limit values set for the temperature board parameters have been exceeded. Check Wiring."
+  },
+  {
+    "Fault Code":"DC-DC F72",
+    "Description":"DC-DC F72 Enter License Code Description: A license must be generated at Spoc for the dc\u2212dc and grid inverter application to run. If the code is wrong the drive will show this fault when it tries to start. Possible cause and solution: The license code should be on a sticker behind the keypad of the drive. Enter it into the license code. Call Spoc."
+  },
+  {
+    "Fault Code":"DC-DC F74",
+    "Description":"DC-DC F74 Follower fault Description: When using the normal master follower function this fault code is given if one or more follower drives trip to fault. This fault is visible also when fault is in master drive. See also what other faults may be active in master drive. Possible cause and solution: Fault in follower drive or in Master drive."
+  },
+  {
+    "Fault Code":"DC-DC F76",
+    "Description":"DC-DC F76 Synchronization fault Description: Interleaving modulation is not synchronized between the drives. Possible cause and solution: Different settings between the drives."
+  },
+  {
+    "Fault Code":"DC-DC F80",
+    "Description":"DC-DC F80 Charging Fault Description: The drive has not reached DC voltage at set time to MCB. Drive pre\u2212charge issue. Possible cause and solution: Charging circuit not operational. High load in DC link. Low voltage in supply for charging circuit."
+  },
+  {
+    "Fault Code":"DC-DC F81",
+    "Description":"DC-DC F81 Closed Loop Description: Feedback signal deviates from calculated source voltage more than set limits."
+  },
+  {
+    "Fault Code":"DC-DC F82",
+    "Description":"DC-DC F82 External Fault 2 Description: Digital input fault. Possible cause and solution: Verify E\u2212stop is pulled out. Check Wiring."
+  },
+  {
+    "Fault Code":"DC-DC F84",
+    "Description":"DC-DC F84 Source Vdc Limit Description: Source voltage has exceeded source Min or Max voltage. Possible cause and solution: Verify Drive parameters are set correctly. Verify battery voltage is accurate."
+  },
+  {
+    "Fault Code":"DC-DC F97",
+    "Description":"DC-DC F97 Signal Trip Description: Freely selectable signal monitoring value has exceeded set limit levels. Grid Inverter Drive Faults"
+  },
+  {
+    "Fault Code":"Grid Inverter F1",
+    "Description":"Grid Inverter F1 Over Current Fault Description: Drive has detected a high current in the output phase. Possible cause and solution: Sudden increase in load Check load. Short circuit in cables Check cables."
+  },
+  {
+    "Fault Code":"Grid Inverter F2",
+    "Description":"Grid Inverter F2 Over Voltage Fault Description: DC\u2212link voltage has exceeded the drive protection limits S1 = Hardware trip. Unit DC Voltage above 911VDC. Possible cause and solution: Sudden change in supply voltage or frequency. Unstable DC power source in uGrid mode. Power is sent back into the drive from load."
+  },
+  {
+    "Fault Code":"Grid Inverter F3",
+    "Description":"Grid Inverter F3 Earth fault Description: Earth fault protection ensures that the sum of the phase currents is zero. S1 = Sum of output phase currents is not zero. Possible cause and solution: Insulation failure in cables. Verify the unit is grounded properly."
+  },
+  {
+    "Fault Code":"Grid Inverter F5",
+    "Description":"Grid Inverter F5 Charge Switch Description: Charge switch status is not correct when start command is given. S1 = Charge switch was open when the start command was given. Possible cause and solution: Check connection of the feedback from the charging relay. Reset the fault and restart."
+  },
+  {
+    "Fault Code":"Grid Inverter F6",
+    "Description":"Grid Inverter F6 Emergency stop Description: Emergency stop command has been given by using a special option board."
+  },
+  {
+    "Fault Code":"Grid Inverter F7",
+    "Description":"Grid Inverter F7 Saturation Fault Description: The F7 saturation fault is looking at the voltage from the collector to the emitter of the IGBT when the device is turned on. If the drive monitors greater than 7VDC when the device is on it sees this as too great of a voltage for the IGBT to be working properly. This fault is only active on the FR4\u22129 frame sizes. There are a few things that can cause this trip. IGBT did not turn on due to defective firing circuit or IGBT Monitoring circuitry is not monitoring the voltage correctly giving false trips A short on the output of the drive can make the IGBT the highest impedance load Poor grounding can cause noise that will trip the drive S1 = Hardware failure Possible cause and solution: Turn off power and do NOT reconnect Power."
+  },
+  {
+    "Fault Code":"Grid Inverter F8",
+    "Description":"Grid Inverter F8 System Fault Description: A system fault indicates several different fault situations in drive operation. It is important to get the subcode from the keypad on this fault. S1 = Reserved Disturbance. Rest the unit and try again. Driver board or IGBT is broken. S2 = Reserved S3 = Reserved S4 = Reserved S5 = Reserved S6 = Reserved S7 = Charge Switch S8 = No power to driver card S9 = Power unit communication (Tx) S10 = Power unit communication (Trip) S11 = Power unit comm. (Measurement) S12 = SystemBus synchronization has failed in DriveSynch Operation S30 = Safe disable inputs are in different state (OPT\u2212AF) S31 = Thermistor short circuit detected (OPT\u2212AF) S32 = OPT\u2212AF board has been removed S33 = OPT\u2212AF board EEPROM error Possible cause and solution: Call distributor"
+  },
+  {
+    "Fault Code":"Grid Inverter F9",
+    "Description":"Grid Inverter F9 Undervoltage Fault Description: DC\u2212link voltage is below the fault voltage limit of the drive. S1 = DC\u2212link too low during run. S2 = No data from the power unit. S3 = Undervoltage control supervision. Possible cause and solution: Too low a supply voltage. Measure supply voltage. Check breakers and fuses. Drive internal fault."
+  },
+  {
+    "Fault Code":"Grid Inverter F10",
+    "Description":"Grid Inverter F10 Line Synchronization Fault Description: Can not sync to source. S1 = Phase supervision diode supply. (Input phase fault, disabled) S2 = Phase supervision active front end. (Line Synch Fault) S3 = Grid Converter operation, frequency outside frequency limits (G2.6.3). Possible cause and solution: Input line phase is missing. Check supply voltage, fuses, and cable."
+  },
+  {
+    "Fault Code":"Grid Inverter F11",
+    "Description":"Grid Inverter F11 Line Phase supervision Description: Current measurement has detected that there is no current in one phase or one phase current is considerably different from other phases. Possible cause and solution: Check cables."
+  },
+  {
+    "Fault Code":"Grid Inverter F13",
+    "Description":"Grid Inverter F13 Drive Under Temperature Fault Description: Heatsink temperature is under \u221210\u00b0C."
+  },
+  {
+    "Fault Code":"Grid Inverter F14",
+    "Description":"Grid Inverter F14 Drive Over Temperature Fault Description: The heat sink on the drive is measured at 89\u02daC or Higher. Possible cause and solution: Lower Load and Increase Airflow. Check heatsink for dust. Check the ambient temperature."
+  },
+  {
+    "Fault Code":"Grid Inverter F22",
+    "Description":"Grid Inverter F22 EEPROM Checksum Fault Description: Possible cause and solution: Parameter save fault. Faulty operation. Component failure. Contact distributor."
+  },
+  {
+    "Fault Code":"Grid Inverter F24",
+    "Description":"Grid Inverter F24 Counter Fault Description: Values displayed on counters are incorrect. Possible cause and solution: Values displayed on counters are incorrect. Have a critical attitude towards values shown on counters. Contact distributor."
+  },
+  {
+    "Fault Code":"Grid Inverter F25",
+    "Description":"Grid Inverter F25 Microprocessor Watchdog Fault Description: Error in loading application. Possible cause and solution: Start\u2212up of the drive has been prevented. Run request is ON when a new application is loaded to the drive. Reset the fault and restart. Contact distributor."
+  },
+  {
+    "Fault Code":"Grid Inverter F26",
+    "Description":"Grid Inverter F26 Start-Up Prevention Description: Error in loading application. Possible cause and solution: Start\u2212up of the drive has been prevented. Run request is ON when a new application is loaded to the drive. Cancel prevention of start\u2212up if this can be done safely. Remove Run Request. Contact distributor."
+  },
+  {
+    "Fault Code":"Grid Inverter F29",
+    "Description":"Grid Inverter F29 Thermistor Fault Description: The thermistor input of the option board has detected too high a motor temperature. Possible cause and solution: Load is over heated. Thermistor cable is broken. Check load. Contact distributor."
+  },
+  {
+    "Fault Code":"Grid Inverter F31",
+    "Description":"Grid Inverter F31 IGBT Temperature Description: IGBT Inverter Bridge over temperature protection has detected too high a short\u2212term overload current. Treat as over current. Possible cause and solution: Sudden increase in load Check load. Short circuit in cables Check cables."
+  },
+  {
+    "Fault Code":"Grid Inverter F32",
+    "Description":"Grid Inverter F32 Fan Cooling Description: Possible cause and solution: Cooling fan of the frequency converter does not start when ON command is given."
+  },
+  {
+    "Fault Code":"Grid Inverter F37",
+    "Description":"Grid Inverter F37 Device Change Description: Option board or power unit changed. Possible cause and solution: New device of same type and rating. Reset fault and start again."
+  },
+  {
+    "Fault Code":"Grid Inverter F38",
+    "Description":"Grid Inverter F38 Device Added Description: Option board added. Possible cause and solution: New device of same type and rating. Reset fault and start again."
+  },
+  {
+    "Fault Code":"Grid Inverter F39",
+    "Description":"Grid Inverter F39 Device Removed Description: Option board removed. Possible cause and solution: New device of same type and rating. Reset fault and start again."
+  },
+  {
+    "Fault Code":"Grid Inverter F40",
+    "Description":"Grid Inverter F40 Device Unknown Description: Unknown option board or drive. S1 = Unknown Device. S2 = Power1 not same type as Power2. Possible cause and solution: Contact distributor."
+  },
+  {
+    "Fault Code":"Grid Inverter F41",
+    "Description":"Grid Inverter F41 IGBT Temperature Description: IGBT Inverter Bridge over temperature protection has detected too high a short\u2212term overload current. Possible cause and solution: Sudden increase in load Check load. Short circuit in cables Check cables."
+  },
+  {
+    "Fault Code":"Grid Inverter F44",
+    "Description":"Grid Inverter F44 Device Changed (Default Param.) Description: Option board or power unit changed. New device of different type or different rating from the previous one Possible cause and solution: 1.  Reset Fault."
+  },
+  {
+    "Fault Code":"Grid Inverter F45",
+    "Description":"Grid Inverter F45 Device Added (Default Param.) Description: Option board or power unit changed. New device of different type or different rating from the previous one Possible cause and solution: 1.  Reset Fault."
+  },
+  {
+    "Fault Code":"Grid Inverter F50",
+    "Description":"Grid Inverter F50 4mA Supervision Description: Analog Signal reading issue. Possible cause and solution: 1.  Current at the analogue input is below 4mA. Check wiring."
+  },
+  {
+    "Fault Code":"Grid Inverter F51",
+    "Description":"Grid Inverter F51 External Fault Description: Digital input fault. Possible cause and solution: 1. Ensure E\u2212stop is out. Check E\u2212stop wiring."
+  },
+  {
+    "Fault Code":"Grid Inverter F52",
+    "Description":"Grid Inverter F52 Keypad Communication Description: Keypad is removed from drive. Possible cause and solution: The connection between the control keypad or NCDrive and the AC drive is broken. Check keypad connection\/cable."
+  },
+  {
+    "Fault Code":"Grid Inverter F53",
+    "Description":"Grid Inverter F53 Fieldbus Communication Description: The data connection between the HMI and drive is broken. Possible cause and solution: Reset fault. Verify power is on to the drive and ethernet switch. Verify that the IP address in the drive has not been changed."
+  },
+  {
+    "Fault Code":"Grid Inverter F54",
+    "Description":"Grid Inverter F54 Slot Fault Description: Defective option board or slot. Drive has lost connection to a option card installed in control module. Possible cause and solution: Check options cards in drive are installed correctly. Do not remove card while drive is powered up."
+  },
+  {
+    "Fault Code":"Grid Inverter F56",
+    "Description":"Grid Inverter F56 PT100 Temperature Fault Description: Temperature protection function is used to measure temperature and give warning and\/or fault when set limits are exceeded. AFEII application supports two temperature sensor boards simultaneously. A1 = Temperature limit has been exceeded. A2 = Sensor not wired or not working. A3 = Short circuit. Possible cause and solution: 1. Temperature limit values set for the temperature board parameters have been exceeded. Check wiring."
+  },
+  {
+    "Fault Code":"Grid Inverter F57",
+    "Description":"Grid Inverter F57 Identification (Not implemented) Description: Identification run has failed."
+  },
+  {
+    "Fault Code":"Grid Inverter F60",
+    "Description":"Grid Inverter F60 Cooling Description: Protection for the liquid\u2212cooled units. An external sensor is connected to the drive (DI: Cooling Monitor) to indicate if cooling liquid is circulating. If the drive is in Stop state only a warning is issued. In Run state a fault is issued, and the drive makes a coast stop. Possible cause and solution: 1.  Liquid cooled drive cooling circulation have been failed."
+  },
+  {
+    "Fault Code":"Grid Inverter F62",
+    "Description":"Grid Inverter F62 Run Disable Description: Run Disable warning signal is issued when Run Enable signal has been removed from the IO."
+  },
+  {
+    "Fault Code":"Grid Inverter F63",
+    "Description":"Grid Inverter F63 Quick stop Description: A command has been given from a digital input or the fieldbus to make a quick stop."
+  },
+  {
+    "Fault Code":"Grid Inverter F65",
+    "Description":"Grid Inverter F65 PT100 Board 2 Description: Temperature protection function is used to measure temperature and give warning and\/or fault when set limits are exceeded. AFEII application supports two temperature sensor boards simultaneously. A1: Temperature limit has been exceeded. A2: Sensor not wired or not working. A3: Short circuit. Possible cause and solution: Temperature limit values set for the temperature board parameters have been exceeded. Check Wiring."
+  },
+  {
+    "Fault Code":"Grid Inverter F67",
+    "Description":"Grid Inverter F67 Fieldbus communication Slot E Description: Loss of communication to the OPTE9 card. Slot E is the 5th slot in the drive (Furthest to the right). Possible cause and solution: Reset fault. If the fault is persistent, try a new OPTE9 card. This must be configured based on each drive."
+  },
+  {
+    "Fault Code":"Grid Inverter F68",
+    "Description":"Grid Inverter F68 D7 Voltage or frequency fault Description: This monitors Grid frequency and voltage for external grid synchronization function. Warning is given when request to synchronize is given and voltage and\/or frequency is out of the warning limits defined in G2.9.6 and G2.9.7 voltage and frequency warning limits. Possible cause and solution: Restart the energy boss with no load. OPT\u2212D7 measurements are not within limits. Check fuses to the d7 transformer."
+  },
+  {
+    "Fault Code":"Grid Inverter F69",
+    "Description":"Grid Inverter F69 OPT-D7 Missing Description: The OPT\u2212D7 card is not recognized in the grid converter drive (The optd7 card goes in slot C on the control module). Possible cause and solution: Verify that the card is seated properly in the grid converter control module. Verify that the drive is showing the correct optd7 output voltage."
+  },
+  {
+    "Fault Code":"Grid Inverter F70",
+    "Description":"Grid Inverter F70 Supply Voltage Description: Supply voltage is not inside of set hysteresis. Not to be confused with OPT\u2212D7 protections."
+  },
+  {
+    "Fault Code":"Grid Inverter F71",
+    "Description":"Grid Inverter F71 LCL Temperature Description: LCL Temperature has reached warning limit."
+  },
+  {
+    "Fault Code":"Grid Inverter F72",
+    "Description":"Grid Inverter F72 Enter License Code Description: A license must be generated at Spoc for the dc\u2212dc and grid inverter application to run. If the code is wrong the drive will show this fault when it tries to start. Possible cause and solution: The license code should be on a sticker behind the keypad of the drive. Enter it into the license code. Call Spoc."
+  },
+  {
+    "Fault Code":"Grid Inverter F73",
+    "Description":"Grid Inverter F73 Supply Frequency Description: Supply frequency is not inside of set hysteresis, set in G2.9.7. Not to be confused with OPT\u2212 D7 protections that will give F93 D7 Frequency. Possible cause and solution: Lower load on the system."
+  },
+  {
+    "Fault Code":"Grid Inverter F80",
+    "Description":"Grid Inverter F80 Charging Fault Description: The drive has not reached DC voltage at set time to MCB. Drive pre\u2212charge issue. Possible cause and solution: Charging circuit not operational. High load in DC link. Low voltage in supply for charging circuit."
+  },
+  {
+    "Fault Code":"Grid Inverter F81",
+    "Description":"Grid Inverter F81 External Fault 2 Description: Digital input fault. Possible cause and solution: Verify E\u2212stop is pulled out. Check Wiring."
+  },
+  {
+    "Fault Code":"Grid Inverter F89",
+    "Description":"Grid Inverter F89 Grid Side Fault Description: In Master\u2212Follower Mode Grid side drive has an active fault that is shown in master drive as a fault."
+  },
+  {
+    "Fault Code":"Grid Inverter F91",
+    "Description":"Grid Inverter F91 Short Circuit Description: Drive has operated against current limit for more than short circuit time. By phase fault detection has seen low voltage for more than short circuit time. Warning comes immediately when current is at current limit, fault comes after the short circuit time Possible cause and solution: There is a short circuit in the grid."
+  },
+  {
+    "Fault Code":"Grid Inverter F92",
+    "Description":"Grid Inverter F92 D7 Voltage Description: The feedback voltage from the output of the grid converter is not within the accepted range of output voltage. The acceptable range is 80% of the target output voltage. Normally this is set to 480V but if you move up the output voltage this increases. It must fall below the trip point for 3 seconds before it faults. ex. target voltage = 480Vac , Low trip point = 384Vac. Possible cause and solution: Lower\/remove load and run the energy boss open. Check fuses going to the D7 transformer. Remove load and turn off the D7 protections. This will allow you to run the drive and see what the D7 voltage is reading. If the D7 voltage is reading low, start tracing the circuit from There should be 480V at the output 480Vac breaker. Verify that the d7 transformer is getting 480V into the transformer. The d7 transformer is a 1 to 60 ratio. You should have about 8Vac on the secondary side. If you do not then the transformer is bad. (Note there is no reference to ground on this, it is only phase to phase) Verify that the same 8Vac is going into the optd7 card on the grid converter control module."
+  },
+  {
+    "Fault Code":"Grid Inverter F93",
+    "Description":"Grid Inverter F93 D7 Frequency Description: The feedback frequency from the output of the grid converter is not within the accepted range of output frequency. The acceptable range is 95% of the target output frequency. Normally this is set to 60Hz but if you move up the output frequency this changes . It must fall below the trip point for 3 seconds before it faults. ex. target voltage = 60Hz, Low trip point = 57Hz. Possible cause and solution: Lower\/remove load and run the energy boss open. Check fuses going to the D7 transformer. Remove load and turn off the D7 protections. This will allow you to run the drive and see what the D7 frequency is reading. If the D7 frequency is reading low, start tracing the circuit from There should be 480V at the output 480Vac breaker. Verify that the d7 transformer is getting 480V into the transformer. The d7 transformer is a 1 to 60 ratio. You should have about 8Vac on the secondary side. If you do not then the transformer is bad. (Note there is no reference to ground on this, it is only phase to phase) Verify that the same 8Vac is going into the optd7 card on the grid converter control module."
+  },
+  {
+    "Fault Code":"DC-DC F97",
+    "Description":"DC-DC F97 Signal Trip Description: Freely selectable signal monitoring value has exceeded set limit levels. Toshiba Battery System Battery Communication Issue Troubleshooting Steps Is the BMU communicating? No \u2026 Does the BMU have 12V on the input? Check 12V power supply and fusing. Is the ethernet cable landed on the BMU and switch? Is the ethernet switch powered up with 24V? Yes, the BMU is communicating. Is the BMU fault cycling on fault reset? (Fault clears briefly then comes back) No\u2026 To clear a fault the power must be cycled on the BMU. Verify that power is cycling into the BMU. Verify the relay controlling the power cycle of the BMU is cycling on fault reset. If not, then replace the relay. Yes, the fault is cycling. Is the CT communicating? No\u2026 Verify it is wired correctly. Verify it has 12V on pin 20 (+12VDC) to pin 22 (\u221212VDC). If not then verify the connector is plugged into the BMU. Verify CanH and CanL to the BMU (pin 25 and 26). Verify that wires 20,22,25, and 26 have continuity from the pin of the BMU connector to the end of the BMU connector wire. Replace CT cable. Replace CT. Replace BMU Cable. Replace BMU. Yes, the CT is communicating. Are the batteries communicating? No\u2026 Verify the BMU is not in the maintenance mode. Verify Pin 8 does not have continuity to ground. Verify wiring. Verify BMU has +12VDC on pin 1 to GND pin 7. Verify Pin 13 has 12VDC (power supply signal). Verify Pin 20 has 12V to CT. Verify Pin 22 has continuity to ground."
+  }
+]
