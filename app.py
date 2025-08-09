@@ -2,6 +2,16 @@
 import json, re
 import streamlit as st
 
+st.image(
+    "https://raw.githubusercontent.com/timbuffington/troubleshoot/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png",
+    use_container_width=True
+)
+st.image(
+    "https://raw.githubusercontent.com/timbuffington/troubleshoot/master/assets/AdobeStock_209254754.jpeg",
+    caption="Adobe Stock reference image",
+    use_container_width=True
+)
+
 st.set_page_config(page_title="EBOSS® Inverter Fault Lookup", layout="centered")
 
 @st.cache_data
