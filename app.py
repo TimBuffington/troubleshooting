@@ -12,54 +12,63 @@ BG_URL   = "https://raw.githubusercontent.com/timbuffington/troubleshoot/main/as
 
 def fetch_image(url: str) -> Tuple[bytes, str]:
     """Return (content_bytes, mime) after validating it's an image/* response."""
-    r = requests.get(url, timeout=15)
-    r.raise_for_status()
-    ctype = r.headers.get("Content-Type", "")
-    if not ctype.startswith("image/"):
-        # Helpful detail for debugging
-        raise ValueError(f"URL returned non-image content-type: {ctype or 'unknown'}")
-    return r.content, ctype.split(";")[0]  # e.g. 'image/png'
+    try:
+        r = requests.get(url, timeout=15)
+        r.raise_for_status()
+        ctype = r.headers.get("Content-Type", "")
+        if not ctype.startswith("image/"):
+            # Helpful detail for debugging
+            raise ValueError(f"URL returned non-image content-type: {ctype or 'unknown'}")
+        return r.content, ctype.split(";")[0]  # e.g. 'image/png'
+    except requests.exceptions.RequestException as e:
+        raise ValueError(f"Error fetching image from URL: {e}")
 
 def set_background_from_bytes(img_bytes: bytes, mime: str):
-    b64 = base64.b64encode(img_bytes).decode("utf-8")
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-          background-image: url("data:{mime};base64,{b64}");
-          background-size: cover;
-          background-position: center center;
-          background-attachment: fixed;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+    if img_bytes and mime:
+        b64 = base64.b64encode(img_bytes).decode("utf-8")
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+              background-image: url("data:{mime};base64,{b64}");
+              background-size: cover;
+              background-position: center center;
+              background-attachment: fixed;
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        st.warning("Unable to set background image due to missing or invalid data.")
 
 def show_logo_from_bytes(img_bytes: bytes, mime: str, width: int = 360, on_dark_bg: bool = True):
-    # Optional: validate with PIL so we can downscale/convert if desired
-    try:
-        _ = Image.open(BytesIO(img_bytes))
-    except UnidentifiedImageError:
-        raise ValueError("Downloaded logo bytes are not a valid image file.")
-    backdrop = "background: rgba(0,0,0,.35);" if on_dark_bg else ""
-    b64 = base64.b64encode(img_bytes).decode("utf-8")
-    st.markdown(
-        f"""
-        <style>
-        .logo-wrap {{
-          display:flex; justify-content:center; align-items:center;
-          padding:10px; border-radius:10px; {backdrop}
-          margin: 8px 0 18px;
-        }}
-        .logo-wrap img {{ max-width:{width}px; height:auto; }}
-        </style>
-        <div class="logo-wrap">
-          <img src="data:{mime};base64,{b64}" alt="Company Logo" />
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    if img_bytes and mime:
+        # Optional: validate with PIL so we can downscale/convert if desired
+        try:
+            _ = Image.open(BytesIO(img_bytes))
+        except UnidentifiedImageError:
+            raise ValueError("Downloaded logo bytes are not a valid image file.")
+        backdrop = "background: rgba(0,0,0,.35);" if on_dark_bg else ""
+        b64 = base64.b64encode(img_bytes).decode("utf-8")
+        st.markdown(
+            f"""
+            <style>
+            .logo-wrap {{
+              display:flex; justify-content:center; align-items:center;
+              padding:10px; border-radius:10px; {backdrop}
+              margin: 8px 0 18px;
+            }}
+            .logo-wrap img {{ max-width:{width}px; height:auto; }}
+            </style>
+            <div class="logo-wrap">
+              <img src="data:{mime};base64,{b64}" alt="Company Logo" />
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        st.warning("Unable to display logo due to missing or invalid image data.")
 
 # ---- Use them (with clear error messages) ----
 try:
@@ -74,35 +83,7 @@ try:
 except Exception as e:
     st.error(f"Logo failed to load: {e}")
 
-col1, col2, col3 = st.columns([1, 6, 1])
-with col2:
-    st.image(logo_image, use_column_width=True)
-st.markdown(
 st.set_page_config(page_title="EBOSS® Inverter Fault Lookup", layout="centered")
-  ,unsafe_allow_html=True,
-)
-@st.cache_data
-def load_data(path: str):
-    with open(path, "r", encoding="utf-8") as f:
-        rows = json.load(f)
-    # Normalize: add 'Device' from prefix, build index
-    for r in rows:
-        code = r.get("Fault Code", "").strip()
-        dev = "Any"
-        up = code.upper()
-        if up.startswith("AFE"): dev = "AFE"
-        elif up.startswith("DC-DC") or up.startswith("DCDC"): dev = "DC-DC"
-        elif up.startswith("GRID INVERTER"): dev = "Grid Inverter"
-        r["Device"] = dev
-        r["_UCODE"] = up  # cached uppercase
-    idx = {r["_UCODE"]: r for r in rows}
-    return rows, idx
-
-rows, idx = load_data("inverter_fault_codes.json")
-
-st.title("EBOSS® Inverter Fault Lookup")
-st.caption("Quick search for **AFE**, **DC-DC**, and **Grid Inverter** fault descriptions.")
-
 # ---- Filters & Inputs
 col1, col2 = st.columns([1, 2])
 with col1:
