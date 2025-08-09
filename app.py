@@ -2,14 +2,46 @@
 import json, re
 import streamlit as st
 
-st.image(
-    "https://raw.githubusercontent.com/timbuffington/troubleshoot/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png",
-    use_container_width=True
+st.markdown(
+    """
+    <style>
+    .stApp {
+      background-image: url('https://raw.githubusercontent.com/timbuffington/troubleshoot/main/assets/AdobeStock_209254754.jpeg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
 )
-st.image(
-    "https://raw.githubusercontent.com/timbuffington/troubleshoot/master/assets/AdobeStock_209254754.jpeg",
-    caption="Adobe Stock reference image",
-    use_container_width=True
+LOGO_URL = "https://raw.githubusercontent.com/timbuffington/troubleshoot/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
+
+st.markdown(
+    f"""
+    <style>
+    /* Container to center the logo */
+    .logo-container {{
+        display: flex;
+        justify-content: center; /* horizontal center */
+        align-items: center;     /* vertical center */
+        margin-bottom: 20px;
+        background-color: rgba(0, 0, 0, 0.4); /* optional backdrop to make white logo visible */
+        padding: 10px;
+        border-radius: 8px;
+    }}
+    /* Style for the logo image */
+    .logo-container img {{
+        max-width: 300px;   /* scale down if large */
+        height: auto;
+    }}
+    </style>
+
+    <div class="logo-container">
+        <img src="{LOGO_URL}" alt="ANA Energy Logo">
+    </div>
+    """,
+    unsafe_allow_html=True
 )
 
 st.set_page_config(page_title="EBOSS® Inverter Fault Lookup", layout="centered")
