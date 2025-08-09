@@ -43,9 +43,7 @@ col1, col2, col3 = st.columns([1, 6, 1])
 with col2:
     st.image(logo_image, use_column_width=True)
 st.markdown(
-    <style>
 st.set_page_config(page_title="EBOSS® Inverter Fault Lookup", layout="centered")
- </style>
   ,unsafe_allow_html=True,
 )
 @st.cache_data
