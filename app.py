@@ -1,51 +1,53 @@
 
 import json, re
 import streamlit as st
+import streamlit as st
+from PIL import Image
+from io import BytesIO
+import requests
 
-st.markdown(
-    """
-    <style>
-    .stApp {
-      background-image: url('https://raw.githubusercontent.com/timbuffington/troubleshoot/main/assets/AdobeStock_209254754.jpeg');
-      background-size: cover;
-      background-position: center center;
-      background-attachment: fixed;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
+# Load the background image
+background_url = "https://raw.githubusercontent.com/timbuffington/troubleshoot/main/assets/AdobeStock_209254754.jpeg"
+response = requests.get(background_url)
+background_image = Image.open(BytesIO(response.content))
+
+# Load the logo image
+logo_url = "https://raw.githubusercontent.com/timbuffington/troubleshoot/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
+response = requests.get(logo_url)
+logo_image = Image.open(BytesIO(response.content))
+
+# Set the page configuration
+st.set_page_config(
+    page_title="My Streamlit App",
+    page_icon=logo_image,
+    layout="wide",
+    initial_sidebar_state="auto",
 )
-LOGO_URL = "https://raw.githubusercontent.com/timbuffington/troubleshoot/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
 
+# Set the background image
 st.markdown(
     f"""
     <style>
-    /* Container to center the logo */
-    .logo-container {{
-        display: flex;
-        justify-content: center; /* horizontal center */
-        align-items: center;     /* vertical center */
-        margin-bottom: 20px;
-        background-color: rgba(0, 0, 0, 0.4); /* optional backdrop to make white logo visible */
-        padding: 10px;
-        border-radius: 8px;
-    }}
-    /* Style for the logo image */
-    .logo-container img {{
-        max-width: 300px;   /* scale down if large */
-        height: auto;
+    .stApp {{
+        background-image: url({background_url});
+        background-size: cover;
+        background-position: center;
     }}
     </style>
-
-    <div class="logo-container">
-        <img src="{LOGO_URL}" alt="ANA Energy Logo">
-    </div>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html=True,
 )
 
+# Display the logo at the center of the top of the page
+col1, col2, col3 = st.columns([1, 6, 1])
+with col2:
+    st.image(logo_image, use_column_width=True)
+st.markdown(
+    <style>
 st.set_page_config(page_title="EBOSS® Inverter Fault Lookup", layout="centered")
-
+ </style>
+  ,unsafe_allow_html=True,
+)
 @st.cache_data
 def load_data(path: str):
     with open(path, "r", encoding="utf-8") as f:
