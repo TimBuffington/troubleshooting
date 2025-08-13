@@ -1,15 +1,36 @@
-import json, re
-from PIL import Image
-import requests
+# app.py — EBOSS® Inverter Fault Lookup (fixed & consolidated)
+# -----------------------------------------------------------
+# Streamlit app with robust background/logo loading and a safe
+# data loader so `rows` is always defined.
+#
+# Requirements (install locally):
+#   pip install streamlit pandas pillow requests
+#
+# Run:
+#   streamlit run app.py
+
+# ---- Imports
 import base64
+import re
+import requests
 from io import BytesIO
 from typing import Tuple
-import streamlit as st
 from PIL import Image, UnidentifiedImageError
+import pandas as pd
+import streamlit as st
 
+# ---- MUST be first Streamlit call
+st.set_page_config(page_title="EBOSS® Inverter Fault Lookup", layout="centered")
+
+# ---- GitHub RAW URLs (update if you move files)
+BG_URL   = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/main/assets/AdobeStock_209254754.jpeg"
 LOGO_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
-BG_URL   = "hhttps://raw.githubusercontent.com/TimBuffington/troubleshooting/main/assets/AdobeStock_209254754.jpeg"  # use main, not master
 
+# Optional CSV that holds fault codes. Expected columns include at least:
+# "Device", "Fault Code" and optionally "Title"/"Description"/"Cause"/"Resolution"
+DATA_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/main/assets/fault_codes.csv"
+
+# ---- Utility: fetch image safely
 def fetch_image(url: str) -> Tuple[bytes, str]:
     """Return (content_bytes, mime) after validating it's an image/* response."""
     try:
@@ -17,7 +38,6 @@ def fetch_image(url: str) -> Tuple[bytes, str]:
         r.raise_for_status()
         ctype = r.headers.get("Content-Type", "")
         if not ctype.startswith("image/"):
-            # Helpful detail for debugging
             raise ValueError(f"URL returned non-image content-type: {ctype or 'unknown'}")
         return r.content, ctype.split(";")[0]  # e.g. 'image/png'
     except requests.exceptions.RequestException as e:
@@ -35,6 +55,12 @@ def set_background_from_bytes(img_bytes: bytes, mime: str):
               background-position: center center;
               background-attachment: fixed;
             }}
+            /* increase contrast for text when over images */
+            .block-container {{
+              background: rgba(0,0,0,0.35);
+              border-radius: 16px;
+              padding: 1.25rem 1.25rem 2rem;
+            }}
             </style>
             """,
             unsafe_allow_html=True
@@ -44,7 +70,6 @@ def set_background_from_bytes(img_bytes: bytes, mime: str):
 
 def show_logo_from_bytes(img_bytes: bytes, mime: str, width: int = 360, on_dark_bg: bool = True):
     if img_bytes and mime:
-        # Optional: validate with PIL so we can downscale/convert if desired
         try:
             _ = Image.open(BytesIO(img_bytes))
         except UnidentifiedImageError:
@@ -70,7 +95,21 @@ def show_logo_from_bytes(img_bytes: bytes, mime: str, width: int = 360, on_dark_
     else:
         st.warning("Unable to display logo due to missing or invalid image data.")
 
-# ---- Use them (with clear error messages) ----
+# ---- Data loader so `rows` always exists
+@st.cache_data(show_spinner=False)
+def load_rows(url: str):
+    try:
+        df = pd.read_csv(url, dtype=str).fillna("")
+        # Normalize expected column names to a consistent case for lookups
+        df.columns = [c.strip() for c in df.columns]
+        return df.to_dict(orient="records"), df
+    except Exception as e:
+        st.warning(f"Could not load fault code data: {e}")
+        return [], pd.DataFrame()
+
+rows, df = load_rows(DATA_URL)
+
+# ---- Background and logo (safe, with errors surfaced to user)
 try:
     bg_bytes, bg_mime = fetch_image(BG_URL)
     set_background_from_bytes(bg_bytes, bg_mime)
@@ -83,7 +122,8 @@ try:
 except Exception as e:
     st.error(f"Logo failed to load: {e}")
 
-st.set_page_config(page_title="EBOSS® Inverter Fault Lookup", layout="centered")
+st.markdown("<h2 style='text-align:center;margin-top:0;'>EBOSS® Inverter Fault Lookup</h2>", unsafe_allow_html=True)
+
 # ---- Filters & Inputs
 col1, col2 = st.columns([1, 2])
 with col1:
@@ -91,16 +131,19 @@ with col1:
 with col2:
     code_input = st.text_input("Fault Code (e.g., AFE F1, DC-DC F80, Grid Inverter F92)").strip()
 
-# Optional selectable list of codes based on device filter
+# ---- Optional: Browse known fault codes
 with st.expander("Browse known fault codes"):
     if device == "Any":
-        codes = [r["Fault Code"] for r in rows]
+        codes = [r.get("Fault Code", "") for r in rows]
     else:
-        codes = [r["Fault Code"] for r in rows if r["Device"] == device]
+        codes = [r.get("Fault Code", "") for r in rows if r.get("Device", "") == device]
+    # dedupe + sort; filter blanks
+    codes = sorted({c for c in codes if c})
     sel = st.selectbox("Select a code", ["--"] + codes, key="browse_select")
     if sel != "--":
         code_input = sel
 
+# ---- Normalize helper
 def normalize(code: str) -> str:
     """
     Normalize minor variants:
@@ -113,57 +156,66 @@ def normalize(code: str) -> str:
         return c
     c = c.replace("DCDC", "DC-DC")
     # Insert space before F if missing (e.g., AFEF1 -> AFE F1)
-    c = re.sub(r"^(AFE|GRID INVERTER|DC-DC)\s*F", r"\1 F", c)
+    c = re.sub(r"^(AFE|GRID INVERTER|DC-DC)\s*F", r"\\1 F", c)
     # Collapse spaces
-    c = re.sub(r"\s+", " ", c)
+    c = re.sub(r"\\s+", " ", c)
     return c
 
-def search(code: str, device_filter: str):
-    key = normalize(code)
-    # Direct hit
-    rec = idx.get(key)
-    if rec and (device_filter == "Any" or rec["Device"] == device_filter):
-        return rec, []
-    # Suggestions: prefix/contains matches inside device
-    pool = rows if device_filter == "Any" else [r for r in rows if r["Device"] == device_filter]
-    sugg = [r for r in pool if key and (key in r["_UCODE"] or r["_UCODE"].startswith(key))]
-    # fallback: suggest same F-number regardless of device
-    m = re.search(r"F\s*\d+", key)
-    if not sugg and m:
-        fnum = m.group(0)  # e.g., F 80
-        sugg = [r for r in pool if fnum.replace(" ", "") in r["_UCODE"].replace(" ", "")]
-    return None, sugg[:10]
+# ---- Search + display results
+def find_matches(rows, code_text: str, device_filter: str):
+    if not code_text:
+        return []
+    target = normalize(code_text)
+    out = []
+    for r in rows:
+        dev = r.get("Device", "").upper()
+        code = normalize(r.get("Fault Code", ""))
+        if not code:
+            continue
+        if device_filter != "Any" and dev != device_filter.upper():
+            continue
+        if code == target:
+            out.append(r)
+    return out
 
-def render_record(r: dict):
-    st.success(f"**{r.get('Fault Code','')}** — *{r.get('Device','')}*")
-    desc = r.get("Description","").strip()
-    # Light formatting: split at 'Possible cause and solution:' if present
-    parts = re.split(r"(?i)Possible\s*cause\s*and\s*solution\s*:", desc, maxsplit=1)
-    st.markdown(parts[0].strip())
-    if len(parts) > 1:
-        st.markdown("**Possible cause and solution:**")
-        # Try to bulletize lines that look like steps
-        bullets = [ln.strip(" \t-•") for ln in parts[1].splitlines() if ln.strip()]
-        for b in bullets:
-            st.markdown(f"- {b}")
+st.markdown("---")
+btn = st.button("Lookup Fault Details", use_container_width=True)
 
-# ---- Action
-do_search = st.button("Search") or (code_input and st.session_state.get("_entered_once") != code_input)
-if code_input:
-    st.session_state["_entered_once"] = code_input
+matches = []
+if btn:
+    matches = find_matches(rows, code_input, device)
 
-if do_search and code_input:
-    rec, suggestions = search(code_input, device)
-    if rec:
-        render_record(rec)
-    else:
-        st.warning("No exact match found.")
-        if suggestions:
-            st.markdown("**Did you mean:**")
-            for s in suggestions:
-                if st.button(s["Fault Code"], key=f"sugg_{s['_UCODE']}"):
-                    render_record(s)
-        else:
-            st.info("Try loosening the device filter or checking the code format.")
+if not btn and code_input:
+    # Live preview without clicking button
+    matches = find_matches(rows, code_input, device)
+
+if matches:
+    for m in matches:
+        title = m.get("Title") or m.get("Description") or m.get("Summary") or ""
+        st.subheader(m.get("Fault Code", "Code"))
+        if m.get("Device"):
+            st.caption(m["Device"])
+        if title:
+            st.write(title)
+
+        c1, c2 = st.columns(2)
+        with c1:
+            cause = m.get("Cause") or m.get("Possible Cause") or m.get("Details") or ""
+            if cause:
+                st.markdown("**Cause**")
+                st.write(cause)
+        with c2:
+            res = m.get("Resolution") or m.get("Recommended Action") or m.get("Fix") or ""
+            if res:
+                st.markdown("**Resolution**")
+                st.write(res)
+
+        # Show full row if user wants
+        with st.expander("Show raw record"):
+            st.json(m)
+        st.markdown("---")
 else:
-    st.caption("Enter a code above or open **Browse known fault codes** to pick one.")
+    if code_input:
+        st.info("No exact match found. Try adjusting the code or device, e.g., 'AFE F1', 'DC-DC F80', 'Grid Inverter F92'.")
+    else:
+        st.caption("Enter a fault code or browse known codes above.")
