@@ -55,12 +55,6 @@ def set_background_from_bytes(img_bytes: bytes, mime: str):
               background-position: center center;
               background-attachment: fixed;
             }}
-            /* increase contrast for text when over images */
-            .block-container {{
-              background: rgba(0,0,0,0.35);
-              border-radius: 16px;
-              padding: 1.25rem 1.25rem 2rem;
-            }}
             </style>
             """,
             unsafe_allow_html=True
