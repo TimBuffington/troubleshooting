@@ -68,14 +68,13 @@ def show_logo_from_bytes(img_bytes: bytes, mime: str, width: int = 360, on_dark_
             _ = Image.open(BytesIO(img_bytes))
         except UnidentifiedImageError:
             raise ValueError("Downloaded logo bytes are not a valid image file.")
-        backdrop = "background: rgba(0,0,0,.35);" if on_dark_bg else ""
+       # backdrop = "background: rgba(0,0,0,.35);" if on_dark_bg else ""
         b64 = base64.b64encode(img_bytes).decode("utf-8")
         st.markdown(
             f"""
             <style>
             .logo-wrap {{
               display:flex; justify-content:center; align-items:center;
-              padding:10px; border-radius:10px; {backdrop}
               margin: 8px 0 18px;
             }}
             .logo-wrap img {{ max-width:{width}px; height:auto; }}
