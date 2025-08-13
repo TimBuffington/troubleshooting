@@ -7,8 +7,8 @@ from typing import Tuple
 import streamlit as st
 from PIL import Image, UnidentifiedImageError
 
-LOGO_URL = "https://raw.githubusercontent.com/timbuffington/troubleshoot/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
-BG_URL   = "https://raw.githubusercontent.com/timbuffington/troubleshoot/main/assets/AdobeStock_209254754.jpeg"  # use main, not master
+LOGO_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
+BG_URL   = "hhttps://raw.githubusercontent.com/TimBuffington/troubleshooting/main/assets/AdobeStock_209254754.jpeg"  # use main, not master
 
 def fetch_image(url: str) -> Tuple[bytes, str]:
     """Return (content_bytes, mime) after validating it's an image/* response."""
