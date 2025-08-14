@@ -1,214 +1,278 @@
-# app.py — EBOSS® Inverter Fault Lookup (fixed & consolidated)
-# -----------------------------------------------------------
-# Streamlit app with robust background/logo loading and a safe
-# data loader so `rows` is always defined.
-#
-# Requirements (install locally):
-#   pip install streamlit pandas pillow requests
-#
-# Run:
-#   streamlit run app.py
-
-# ---- Imports
-import base64
+# app.py
+from __future__ import annotations
+import json
 import re
-import requests
-from io import BytesIO
-from typing import Tuple
-from PIL import Image, UnidentifiedImageError
-import pandas as pd
+from pathlib import Path
 import streamlit as st
+# Background image URL (GitHub raw)
+BG_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/AdobeStock_209254754.jpeg"
+# Company logo (centered near the top)
+LOGO_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
 
-# ---- MUST be first Streamlit call
-st.set_page_config(page_title="EBOSS® Inverter Fault Lookup", layout="centered")
+st.markdown(f"""
+<style>
+/* Centered, responsive logo — no background fill */
+.logo-wrap {{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.25rem 0 0.75rem 0;   /* tight to the top */
+}}
+.logo-wrap img {{
+  max-width: min(420px, 70vw);
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.45)); /* legibility over photo */
+}}
+</style>
 
-# ---- GitHub RAW URLs (update if you move files)
-BG_URL   = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/main/assets/AdobeStock_209254754.jpeg"
-LOGO_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
+<div class="logo-wrap">
+  <img src="{LOGO_URL}" alt="Alliance North America logo">
+</div>
+""", unsafe_allow_html=True)
 
-# Optional CSV that holds fault codes. Expected columns include at least:
-# "Device", "Fault Code" and optionally "Title"/"Description"/"Cause"/"Resolution"
-DATA_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/main/assets/fault_codes.csv"
 
-# ---- Utility: fetch image safely
-def fetch_image(url: str) -> Tuple[bytes, str]:
-    """Return (content_bytes, mime) after validating it's an image/* response."""
-    try:
-        r = requests.get(url, timeout=15)
-        r.raise_for_status()
-        ctype = r.headers.get("Content-Type", "")
-        if not ctype.startswith("image/"):
-            raise ValueError(f"URL returned non-image content-type: {ctype or 'unknown'}")
-        return r.content, ctype.split(";")[0]  # e.g. 'image/png'
-    except requests.exceptions.RequestException as e:
-        raise ValueError(f"Error fetching image from URL: {e}")
+# Global CSS: full-bleed background image, keep containers transparent
+st.markdown(f"""
+<style>
+/* Main app view */
+[data-testid="stAppViewContainer"] {{
+  background-image: url('{BG_URL}');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}}
 
-def set_background_from_bytes(img_bytes: bytes, mime: str):
-    if img_bytes and mime:
-        b64 = base64.b64encode(img_bytes).decode("utf-8")
-        st.markdown(
-            f"""
-            <style>
-            .stApp {{
-              background-image: url("data:{mime};base64,{b64}");
-              background-size: cover;
-              background-position: center center;
-              background-attachment: fixed;
-            }}
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
-    else:
-        st.warning("Unable to set background image due to missing or invalid data.")
+/* Make the central block transparent so the background shows through */
+.block-container {{
+  background: transparent !important;
+}}
 
-def show_logo_from_bytes(img_bytes: bytes, mime: str, width: int = 360, on_dark_bg: bool = True):
-    if img_bytes and mime:
-        try:
-            _ = Image.open(BytesIO(img_bytes))
-        except UnidentifiedImageError:
-            raise ValueError("Downloaded logo bytes are not a valid image file.")
-       # backdrop = "background: rgba(0,0,0,.35);" if on_dark_bg else ""
-        b64 = base64.b64encode(img_bytes).decode("utf-8")
-        st.markdown(
-            f"""
-            <style>
-            .logo-wrap {{
-              display:flex; justify-content:center; align-items:center;
-              margin: 8px 0 18px;
-            }}
-            .logo-wrap img {{ max-width:{width}px; height:auto; }}
-            </style>
-            <div class="logo-wrap">
-              <img src="data:{mime};base64,{b64}" alt="Company Logo" />
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-    else:
-        st.warning("Unable to display logo due to missing or invalid image data.")
+/* Transparent header */
+[data-testid="stHeader"] {{
+  background: rgba(0,0,0,0) !important;
+}}
 
-# ---- Data loader so `rows` always exists
-@st.cache_data(show_spinner=False)
-def load_rows(url: str):
-    try:
-        df = pd.read_csv(url, dtype=str).fillna("")
-        # Normalize expected column names to a consistent case for lookups
-        df.columns = [c.strip() for c in df.columns]
-        return df.to_dict(orient="records"), df
-    except Exception as e:
-        st.warning(f"Could not load fault code data: {e}")
-        return [], pd.DataFrame()
+/* Keep the sidebar transparent as well (no fill) */
+[data-testid="stSidebar"] > div:first-child {{
+  background: rgba(0,0,0,0) !important;
+}}
 
-rows, df = load_rows(DATA_URL)
+/* Optional: improve text legibility over photos */
+.app-title {{ text-shadow: 0 2px 8px rgba(0,0,0,.45); }}
+.muted {{ text-shadow: 0 1px 4px rgba(0,0,0,.35); }}
+</style>
+""", unsafe_allow_html=True)
 
-# ---- Background and logo (safe, with errors surfaced to user)
-try:
-    bg_bytes, bg_mime = fetch_image(BG_URL)
-    set_background_from_bytes(bg_bytes, bg_mime)
-except Exception as e:
-    st.error(f"Background failed to load: {e}")
 
-try:
-    logo_bytes, logo_mime = fetch_image(LOGO_URL)
-    show_logo_from_bytes(logo_bytes, logo_mime, width=360, on_dark_bg=True)
-except Exception as e:
-    st.error(f"Logo failed to load: {e}")
+st.set_page_config(page_title="Fault Code Finder", page_icon="🛠️", layout="centered")
 
-st.markdown("<h2 style='text-align:center;margin-top:0;'>EBOSS® Inverter Fault Lookup</h2>", unsafe_allow_html=True)
+# ---------------------------------------
+# Config / constants
+# ---------------------------------------
+JSON_FILE = Path(__file__).parent / "inverter_fault_codes_formatted.json"
 
-# ---- Filters & Inputs
-col1, col2 = st.columns([1, 2])
-with col1:
-    device = st.selectbox("Device", ["Any", "AFE", "DC-DC", "Grid Inverter"])
-with col2:
-    code_input = st.text_input("Fault Code (e.g., AFE F1, DC-DC F80, Grid Inverter F92)").strip()
+# Map Inverter_Name -> UI equipment label
+EQUIP_NAME_MAP = {
+    "AFE Inverter": "AFE",
+    "DC-DC Converter": "DC-DC",
+    "Grid Inverter": "Grid",
+}
 
-# ---- Optional: Browse known fault codes
-with st.expander("Browse known fault codes"):
-    if device == "Any":
-        codes = [r.get("Fault Code", "") for r in rows]
-    else:
-        codes = [r.get("Fault Code", "") for r in rows if r.get("Device", "") == device]
-    # dedupe + sort; filter blanks
-    codes = sorted({c for c in codes if c})
-    sel = st.selectbox("Select a code", ["--"] + codes, key="browse_select")
-    if sel != "--":
-        code_input = sel
+UI_EQUIPMENTS = ["AFE", "DC-DC", "Grid"]
 
-# ---- Normalize helper
-def normalize(code: str) -> str:
-    """
-    Normalize minor variants:
-    - collapse multiple spaces
-    - allow 'DCDC' to match 'DC-DC'
-    - allow AFEF1 -> AFE F1, etc.
-    """
-    c = code.upper().strip()
-    if not c:
-        return c
-    c = c.replace("DCDC", "DC-DC")
-    # Insert space before F if missing (e.g., AFEF1 -> AFE F1)
-    c = re.sub(r"^(AFE|GRID INVERTER|DC-DC)\s*F", r"\\1 F", c)
-    # Collapse spaces
-    c = re.sub(r"\\s+", " ", c)
-    return c
 
-# ---- Search + display results
-def find_matches(rows, code_text: str, device_filter: str):
-    if not code_text:
-        return []
-    target = normalize(code_text)
-    out = []
+# ---------------------------------------
+# Load & index data
+# ---------------------------------------
+def load_faults():
+    with open(JSON_FILE, "r", encoding="utf-8") as f:
+        rows = json.load(f)
+
+    # faults_by_equip[equip]["F91"] = entry dict
+    faults_by_equip: dict[str, dict[str, dict]] = {"AFE": {}, "DC-DC": {}, "Grid": {}}
+
     for r in rows:
-        dev = r.get("Device", "").upper()
-        code = normalize(r.get("Fault Code", ""))
-        if not code:
+        inv_name = r.get("Inverter_Name", "").strip()
+        ui_equip = EQUIP_NAME_MAP.get(inv_name)
+        fault_code_full = (r.get("Fault_Code") or "").strip()  # e.g., "AFE F91", "Grid Inverter F2", etc.
+
+        # Extract trailing "Fxx" token so user can just type "F91"
+        code_only = parse_to_code_only(fault_code_full)  # -> "F91" or None
+        if not (ui_equip and code_only):
             continue
-        if device_filter != "Any" and dev != device_filter.upper():
-            continue
-        if code == target:
-            out.append(r)
-    return out
 
-st.markdown("---")
-btn = st.button("Lookup Fault Details", use_container_width=True)
+        # Store canonical record with nice fields
+        entry = {
+            "equipment": ui_equip,
+            "code": code_only,  # "F91"
+            "fault_code_full": fault_code_full,  # original text
+            "description": (r.get("Description") or "").strip(),
+            "causes": (r.get("Possible_Causes") or "").strip(),
+            "fixes": (r.get("Recommended_Fixes") or "").strip(),
+        }
+        faults_by_equip[ui_equip][code_only] = entry
 
-matches = []
-if btn:
-    matches = find_matches(rows, code_input, device)
+    return faults_by_equip
 
-if not btn and code_input:
-    # Live preview without clicking button
-    matches = find_matches(rows, code_input, device)
 
-if matches:
-    for m in matches:
-        title = m.get("Title") or m.get("Description") or m.get("Summary") or ""
-        st.subheader(m.get("Fault Code", "Code"))
-        if m.get("Device"):
-            st.caption(m["Device"])
-        if title:
-            st.write(title)
+def parse_to_code_only(text: str | None) -> str | None:
+    """Return the last token that looks like an 'F' code, e.g. 'F1', 'F91'."""
+    if not text:
+        return None
+    # Accept 'F91', 'f91', possibly with punctuation/spaces
+    m = re.findall(r"\bF\d+\b", text.upper())
+    return m[-1] if m else None
 
-        c1, c2 = st.columns(2)
-        with c1:
-            cause = m.get("Cause") or m.get("Possible Cause") or m.get("Details") or ""
-            if cause:
-                st.markdown("**Cause**")
-                st.write(cause)
-        with c2:
-            res = m.get("Resolution") or m.get("Recommended Action") or m.get("Fix") or ""
-            if res:
-                st.markdown("**Resolution**")
-                st.write(res)
 
-        # Show full row if user wants
-        with st.expander("Show raw record"):
-            st.json(m)
-        st.markdown("---")
-else:
-    if code_input:
-        st.info("No exact match found. Try adjusting the code or device, e.g., 'AFE F1', 'DC-DC F80', 'Grid Inverter F92'.")
+FAULTS = load_faults()
+
+
+# ---------------------------------------
+# Helpers
+# ---------------------------------------
+def normalize_user_input_code(s: str) -> str | None:
+    """Handle inputs like 'F91', ' f 91 ', 'AFE F91', etc -> 'F91'."""
+    if not s:
+        return None
+    s = s.strip().upper()
+    # If they typed 'AFE F91' etc, pull just the trailing F-code:
+    code = parse_to_code_only(s)
+    if code:
+        return code
+    # Fallback: if they only typed digits, prepend F
+    if s.isdigit():
+        return f"F{s}"
+    return s  # as-is if they typed 'F91' already
+
+
+def find_fault(selected_equip: str, code: str):
+    """Search selected equipment first; if not found, search others."""
+    primary = FAULTS.get(selected_equip, {}).get(code)
+    alts = []
+    if not primary:
+        for equip, table in FAULTS.items():
+            if equip == selected_equip:
+                continue
+            if code in table:
+                alts.append(table[code])
+    return primary, alts
+
+
+def bullets_from_text(s: str) -> list[str]:
+    """Turn a semi-structured sentence string into bullet items."""
+    if not s:
+        return []
+    # Split on periods/semicolons/newlines; keep short/clean items
+    parts = re.split(r"[;\.\n]+", s)
+    items = []
+    for p in parts:
+        t = " ".join(p.strip().split())
+        if t:
+            # De-duplicate accidental doubled words like "Check Check"
+            t = re.sub(r"\b(\w+)\s+\1\b", r"\1", t, flags=re.IGNORECASE)
+            items.append(t)
+    return items
+
+
+def reset_state():
+    for k in list(st.session_state.keys()):
+        if k.startswith("fc_"):
+            del st.session_state[k]
+
+
+def show_result(entry: dict):
+    st.success(f"Found {entry['code']} in {entry['equipment']}")
+    with st.container(border=True):
+        if entry.get("description"):
+            st.markdown(f"**Description**: {entry['description']}")
+        causes = bullets_from_text(entry.get("causes", ""))
+        fixes = bullets_from_text(entry.get("fixes", ""))
+
+        if causes:
+            st.markdown("**Possible causes:**")
+            for c in causes:
+                st.markdown(f"- {c}")
+
+        if fixes:
+            st.markdown("**Recommended fixes:**")
+            for fx in fixes:
+                st.markdown(f"- {fx}")
+
+
+# ---------------------------------------
+# UI
+# ---------------------------------------
+st.markdown(
+    """
+    <style>
+    .app-title { font-size: 1.8rem; font-weight: 700; margin-bottom: .25rem; }
+    .muted { color: #666; }
+    .stButton > button { border-radius: 10px; padding: 0.5rem 1rem; }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.markdown('<div class="app-title">🛠️ Fault Code Finder</div>', unsafe_allow_html=True)
+st.markdown('<div class="muted">Select equipment, enter a code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
+st.write("")
+
+with st.form("fc_form", clear_on_submit=False):
+    c1, c2 = st.columns(2)
+    with c1:
+        selected = st.selectbox("Equipment", UI_EQUIPMENTS, key="fc_equipment")
+    with c2:
+        user_code_raw = st.text_input("Fault Code", placeholder="e.g., F91", key="fc_code_raw")
+
+    submitted = st.form_submit_button("Search")
+
+if submitted:
+    code = normalize_user_input_code(user_code_raw)
+    if not code:
+        st.error("Please enter a fault code (e.g., F91).")
     else:
-        st.caption("Enter a fault code or browse known codes above.")
+        primary, alts = find_fault(selected, code)
+        if primary:
+            st.session_state["fc_result"] = primary
+            st.session_state["fc_show_modal"] = False
+        elif alts:
+            st.session_state["fc_alt_matches"] = alts
+            st.session_state["fc_alt_prompt"] = (
+                f"Fault code {code} was not found in {selected}, "
+                f"but it exists in: {', '.join(sorted({a['equipment'] for a in alts}))}."
+            )
+            st.session_state["fc_show_modal"] = True
+            if "fc_result" in st.session_state:
+                del st.session_state["fc_result"]
+        else:
+            reset_state()
+            st.warning(f"No results found for {code} in any dictionary.")
+
+# Modal when found in different equipment
+if st.session_state.get("fc_show_modal"):
+    with st.modal("Found in a different equipment"):
+        st.info(st.session_state.get("fc_alt_prompt", "Match found elsewhere."))
+        options = st.session_state.get("fc_alt_matches", [])
+        label_map = {f"{e['equipment']} – {e['fault_code_full']}": i for i, e in enumerate(options)}
+        choice_label = st.radio("Choose which one to view:", list(label_map.keys()), index=0)
+        cA, cB = st.columns(2)
+        if cA.button("Yes, show it"):
+            idx = label_map[choice_label]
+            st.session_state["fc_result"] = options[idx]
+            st.session_state["fc_show_modal"] = False
+            st.rerun()
+        if cB.button("Cancel"):
+            reset_state()
+            st.rerun()
+
+# Render result if present
+if "fc_result" in st.session_state:
+    show_result(st.session_state["fc_result"])
+    st.write("")
+    if st.button("Clear"):
+        reset_state()
+        st.rerun()
+
+# Tiny tip
+st.caption("Tip: You can type just the number (e.g., 91) or 'F91'. Case-insensitive.")
