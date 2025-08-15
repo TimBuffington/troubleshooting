@@ -111,9 +111,8 @@ st.markdown("""
         font-weight: bold;
         border: 2px solid #939598; /* Light grey border */
         border-radius: 6px;
-        padding: 6px 8px;
+        padding: 1px;
         height: 42px; /* Match typical selectbox height */
-        transition: box-shadow 0.3s ease, border-color 0.3s ease;
         box-sizing: border-box; /* Include padding/border in height */
     }
 
@@ -125,7 +124,7 @@ st.markdown("""
 
     /* Hover effect */
     input[type="text"]:hover {
-        box-shadow: 0 0 12px #80BD47; /* Energy green glow */
+        box-shadow: 0 0 30px #80BD47; /* Energy green glow */
     }
 
     /* Focus effect */
