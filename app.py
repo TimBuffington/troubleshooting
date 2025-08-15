@@ -108,7 +108,7 @@ st.markdown("""
         background-color: #000000; /* Black background */
         border: 2px solid #939598; /* Light grey border */
         color: #FFFFFF; /* Alpine white text */
-        height: auto;
+        height: 30px;
         font-family: Arial, sans-serif;
         font-weight: bold;
         border-radius: 6px;
@@ -123,7 +123,7 @@ st.markdown("""
     /* Hover effect */
     input[type="text"]:hover {
         border-color: #80BD47; /* Energy green border */
-        box-shadow: 0 0 12px #80BD47; /* Glow */
+        box-shadow: 0 0 30px #80BD47; /* Glow */
     }
 
     /* Focus effect */
