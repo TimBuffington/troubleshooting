@@ -111,8 +111,6 @@ st.markdown("""
         font-weight: bold;
         border-radius: 6px;
         padding: 1px;
-        transition: box-shadow 0.3s ease, border-color 0.3s ease;
-    }
 
     /* Placeholder text color */
     input[type="text"]::placeholder {
