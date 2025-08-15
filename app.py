@@ -88,6 +88,42 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+    <style>
+    /* Text input box */
+    input[type="text"] {
+        background-color: #000000; /* Black background */
+        border: 2px solid #939598; /* Light grey border */
+        color: #FFFFFF; /* Alpine white text */
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        border-radius: 6px;
+        padding: 6px;
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Placeholder text color */
+    input[type="text"]::placeholder {
+        color: #CCCCCC; /* Light grey placeholder */
+        font-weight: normal;
+    }
+
+    /* Hover effect */
+    input[type="text"]:hover {
+        border-color: #80BD47; /* Energy green border */
+        box-shadow: 0 0 12px #80BD47; /* Glow */
+    }
+
+    /* Focus effect */
+    input[type="text"]:focus {
+        border-color: #80BD47;
+        box-shadow: 0 0 12px #80BD47;
+        outline: none; /* Remove default blue outline */
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
 
 # -------------------- Compat helpers --------------------
 def _has(attr: str) -> bool:
