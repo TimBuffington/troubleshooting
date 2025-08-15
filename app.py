@@ -109,10 +109,10 @@ st.markdown("""
         color: #FFFFFF;           /* White text */
         font-family: Arial, sans-serif;
         font-weight: bold;
-        border: 2px solid #939598; /* Light grey border */
+        border: 2px solid #939598, !important;
         border-radius: 6px;
-        padding: 1px;
-        height: 42px; /* Match typical selectbox height */
+        padding: 1px, !important;
+        height: 42px, !important;
         box-sizing: border-box; /* Include padding/border in height */
     }
 
@@ -125,13 +125,6 @@ st.markdown("""
     /* Hover effect */
     input[type="text"]:hover {
         box-shadow: 0 0 30px #80BD47; /* Energy green glow */
-    }
-
-    /* Focus effect */
-    input[type="text"]:focus {
-        border-color: #80BD47;
-        box-shadow: 0 0 12px #80BD47;
-        outline: none; /* Remove default blue outline */
     }
     </style>
 """, unsafe_allow_html=True)
