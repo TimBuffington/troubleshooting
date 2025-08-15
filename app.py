@@ -197,15 +197,13 @@ def show_result(entry: dict):
 # ---------------------------------------
 # UI
 # ---------------------------------------
-st.markdown(
-    """
+st.markdown(f"""
     <style>
     .app-title { font-size: 1.8rem; font-weight: 700; margin-bottom: .25rem; }
     .muted { color: #666; }
     .stButton > button { border-radius: 10px; padding: 0.5rem 1rem; }
     </style>
-    """,
-    unsafe_allow_html=True,
+    """, unsafe_allow_html=True,
 )
 
 st.markdown('<div class="app-title">🛠️ Fault Code Finder</div>', unsafe_allow_html=True)
