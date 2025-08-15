@@ -266,7 +266,7 @@ if FAULTS is None:
             st.exception(e)
 
 # -------------------- UI --------------------
-st.markdown('<div class="app-title">EBOSS&reg Fault Codes</div>', unsafe_allow_html=True)
+st.markdown('<div class="app-title">EBOSS&reg Fault Code Lookup</div>', unsafe_allow_html=True)
 st.markdown('<div class="muted">Select equipment, enter a code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
 st.write("")
 
