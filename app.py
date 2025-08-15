@@ -104,11 +104,11 @@ st.markdown("""
 st.markdown("""
     <style>
     /* Text input box */
-    input[type="text"] {
+    input[type="text"] > div {
         background-color: #000000; /* Black background */
         border: 2px solid #939598; /* Light grey border */
         color: #FFFFFF; /* Alpine white text */
-        height: 50px;
+        height: auto;
         font-family: Arial, sans-serif;
         font-weight: bold;
         border-radius: 6px;
