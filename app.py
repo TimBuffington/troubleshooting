@@ -406,6 +406,66 @@ if FAULTS:
             safe_rerun()
 
     st.caption(f"Tip: you can type just the number (e.g., 91) or 'F91'. "
+
+
+# --- Mobile-first responsive tweaks ---
+st.markdown("""
+<style>
+/* 1) General mobile layout improvements */
+@media (max-width: 700px) {
+  /* Make the app content breathe on small screens */
+  .block-container { padding: 0.75rem 0.75rem !important; }
+
+  /* Stack Streamlit columns vertically and ensure full width */
+  div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+
+  /* Full-width inputs/buttons for easier tapping */
+  .stButton > button,
+  input[type="text"],
+  div[data-baseweb="select"] > div {
+    width: 100% !important;
+  }
+
+  /* Slightly smaller title to prevent wrapping */
+  .app-title { font-size: 1.4rem !important; line-height: 1.25 !important; }
+}
+
+/* 2) Improve tap targets across devices */
+.stButton > button,
+input[type="text"],
+div[data-baseweb="select"] > div {
+  min-height: 44px; /* iOS/Android recommended minimum */
+}
+
+/* 3) Avoid dropdown going off-screen; make it scrollable */
+@media (max-width: 700px) {
+  div[data-baseweb="select"] ul {
+    max-height: 50vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* 4) Better radio/selectable items for touch */
+[role="radiogroup"] label, [role="menuitem"] {
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+/* 5) Prevent background jank on mobile (fixed -> scroll) */
+@media (max-width: 700px) {
+  [data-testid="stAppViewContainer"] {
+    background-attachment: scroll !important;
+    background-position: center top !important;
+  }
+}
+</style>
+""", unsafe_allow_html=True)
+
+
                f"Data source: {data_origin}. Streamlit v{st.__version__}")
 else:
     st.stop()
