@@ -48,6 +48,48 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+
+st.markdown("""
+    <style>
+    /* Main selectbox container */
+    div[data-baseweb="select"] > div {
+        background-color: #000000; /* Black background */
+        border: 2px solid #939598; /* Light grey border */
+        color: #FFFFFF; /* Alpine white text */
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        border-radius: 6px;
+        padding: 4px;
+    }
+
+    /* Dropdown arrow icon */
+    div[data-baseweb="select"] svg {
+        fill: #FFFFFF; /* Alpine white arrow */
+    }
+
+    /* Dropdown menu background */
+    div[data-baseweb="select"] ul {
+        background-color: #000000; /* Black menu */
+        color: #FFFFFF; /* Alpine white text */
+    }
+
+    /* Option hover effect */
+    div[data-baseweb="select"] li:hover {
+        background-color: #000000;
+        color: #FFFFFF;
+        box-shadow: 0 0 8px #80BD47; /* Energy green glow */
+        cursor: pointer;
+    }
+
+    /* Focused selectbox effect */
+    div[data-baseweb="select"] > div:focus-within {
+        border-color: #80BD47; /* Energy green border */
+        box-shadow: 0 0 10px #80BD47;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
 # -------------------- Compat helpers --------------------
 def _has(attr: str) -> bool:
     return callable(getattr(st, attr, None))
