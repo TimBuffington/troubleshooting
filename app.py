@@ -404,8 +404,7 @@ if FAULTS:
         if st.button("Clear"):
             reset_state()
             safe_rerun()
-
-    st.caption(f", Tip: you can type just the number (e.g., 91) or 'F91'. "
+        st.caption("Tip: you can type just the number (e.g., 91) or 'F91'.")
 
 
 # --- Mobile-first responsive tweaks ---
