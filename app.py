@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 import streamlit as st
-st.caption(f"Streamlit running: v{st.__version__}")
+
 
 # Background image URL (GitHub raw)
 BG_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/AdobeStock_209254754.jpeg"
@@ -13,7 +13,6 @@ LOGO_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs
 
 st.markdown(f"""
 <style>
-/* Centered, responsive logo — no background fill */
 .logo-wrap {{
   display: flex;
   align-items: center;
@@ -32,11 +31,8 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-
-# Global CSS: full-bleed background image, keep containers transparent
 st.markdown(f"""
 <style>
-/* Main app view */
 [data-testid="stAppViewContainer"] {{
   background-image: url('{BG_URL}');
   background-size: cover;
@@ -45,22 +41,18 @@ st.markdown(f"""
   background-attachment: fixed;
 }}
 
-/* Make the central block transparent so the background shows through */
 .block-container {{
   background: transparent !important;
 }}
 
-/* Transparent header */
 [data-testid="stHeader"] {{
   background: rgba(0,0,0,0) !important;
 }}
 
-/* Keep the sidebar transparent as well (no fill) */
 [data-testid="stSidebar"] > div:first-child {{
   background: rgba(0,0,0,0) !important;
 }}
 
-/* Optional: improve text legibility over photos */
 .app-title {{ text-shadow: 0 2px 8px rgba(0,0,0,.45); }}
 .muted {{ text-shadow: 0 1px 4px rgba(0,0,0,.35); }}
 </style>
@@ -267,6 +259,7 @@ if st.session_state.get("fc_show_modal"):
         if cB.button("Cancel"):
             reset_state()
             st.rerun()
+
 
 # Render result if present
 if "fc_result" in st.session_state:
