@@ -103,18 +103,21 @@ st.markdown("""
 
 st.markdown("""
     <style>
-    /* Text input box */
-    input[type="text"] > div {
+    /* Base style for text input */
+    input[type="text"] {
         background-color: #000000; /* Black background */
-        border: 2px solid #939598; /* Light grey border */
-        color: #FFFFFF; /* Alpine white text */
-        height: auto;
+        color: #FFFFFF;           /* White text */
         font-family: Arial, sans-serif;
         font-weight: bold;
+        border: 2px solid #939598; /* Light grey border */
         border-radius: 6px;
-        padding: 1px;
+        padding: 6px 8px;
+        height: 42px; /* Match typical selectbox height */
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        box-sizing: border-box; /* Include padding/border in height */
+    }
 
-    /* Placeholder text color */
+    /* Placeholder text */
     input[type="text"]::placeholder {
         color: #CCCCCC; /* Light grey placeholder */
         font-weight: normal;
@@ -122,8 +125,7 @@ st.markdown("""
 
     /* Hover effect */
     input[type="text"]:hover {
-        border-color: #80BD47; /* Energy green border */
-        box-shadow: 0 0 30px #80BD47; /* Glow */
+        box-shadow: 0 0 12px #80BD47; /* Energy green glow */
     }
 
     /* Focus effect */
