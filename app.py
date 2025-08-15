@@ -10,7 +10,7 @@ from typing import Optional, Tuple, List, Dict
 import requests
 import streamlit as st
 
-st.set_page_config(page_title="EBOSS&reg Falt Code Lookup", layout="centered")
+st.set_page_config(page_title="EBOSS® Falt Code Lookup", layout="centered")
 
 # -------------------- Branding (no fill) --------------------
 BG_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/AdobeStock_209254754.jpeg"
