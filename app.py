@@ -110,7 +110,7 @@ st.markdown("""
         font-family: Arial, sans-serif;
         font-weight: bold;
         border-radius: 6px;
-        padding: 6px;
+        padding: 1px;
         transition: box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
