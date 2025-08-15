@@ -5,7 +5,28 @@ import re
 from pathlib import Path
 import streamlit as st
 
+from contextlib import contextmanager
+import streamlit as st
 
+def _has(attr: str) -> bool:
+    return callable(getattr(st, attr, None))
+
+@contextmanager
+def modal_ctx(title: str):
+    """Use real modal if available; otherwise fall back to an expander."""
+    if _has("modal"):
+        with st.modal(title):
+            yield
+    else:
+        with st.expander(f"🔎 {title}", expanded=True):
+            yield
+
+def safe_rerun():
+    # Works on older and newer Streamlit
+    if _has("rerun"):
+        safe_rerun()
+    else:
+        safe_rerun()
 # Background image URL (GitHub raw)
 BG_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/AdobeStock_209254754.jpeg"
 # Company logo (centered near the top)
@@ -253,20 +274,21 @@ if submitted:
 
 # Modal when found in different equipment
 if st.session_state.get("fc_show_modal"):
-    with st.modal("Found in a different equipment"):
-        st.info(st.session_state.get("fc_alt_prompt", "Match found elsewhere."))
-        options = st.session_state.get("fc_alt_matches", [])
-        label_map = {f"{e['equipment']} – {e['fault_code_full']}": i for i, e in enumerate(options)}
-        choice_label = st.radio("Choose which one to view:", list(label_map.keys()), index=0)
-        cA, cB = st.columns(2)
-        if cA.button("Yes, show it"):
-            idx = label_map[choice_label]
-            st.session_state["fc_result"] = options[idx]
-            st.session_state["fc_show_modal"] = False
-            st.rerun()
-        if cB.button("Cancel"):
-            reset_state()
-            st.rerun()
+    with modal_ctx("Found in a different equipment"):
+    st.info(st.session_state.get("fc_alt_prompt", "Match found elsewhere."))
+    options = st.session_state.get("fc_alt_matches", [])
+    label_map = {f"{e['equipment']} – {e['fault_code_full']}": i for i, e in enumerate(options)}
+    choice_label = st.radio("Choose which one to view:", list(label_map.keys()), index=0)
+    cA, cB = st.columns(2)
+    if cA.button("Yes, show it"):
+        idx = label_map[choice_label]
+        st.session_state["fc_result"] = options[idx]
+        st.session_state["fc_show_modal"] = False
+        safe_rerun()
+    if cB.button("Cancel"):
+        reset_state()
+        safe_rerun()
+
 
 
 # Render result if present
@@ -275,7 +297,7 @@ if "fc_result" in st.session_state:
     st.write("")
     if st.button("Clear"):
         reset_state()
-        st.rerun()
+        safe_rerun()
 
 # Tiny tip
 st.caption("Tip: You can type just the number (e.g., 91) or 'F91'. Case-insensitive.")
