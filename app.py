@@ -61,6 +61,12 @@ st.markdown("""
         border-radius: 6px;
         padding: 1px;
     }
+    
+    /* Hover effect on selectbox */
+    div[data-baseweb="select"] > div:hover {
+        border-color: #80BD47; /* Energy green border */
+        box-shadow: 0 0 12px #80BD47; /* Glow effect */
+    }
 
     /* Dropdown arrow icon */
     div[data-baseweb="select"] svg {
