@@ -59,7 +59,7 @@ st.markdown("""
         font-family: Arial, sans-serif;
         font-weight: bold;
         border-radius: 6px;
-        padding: 4px;
+        padding: 1px;
     }
 
     /* Dropdown arrow icon */
@@ -77,15 +77,8 @@ st.markdown("""
     div[data-baseweb="select"] li:hover {
         background-color: #000000;
         color: #FFFFFF;
-        box-shadow: 0 0 8px #80BD47; /* Energy green glow */
-        cursor: pointer;
-    }
-
-    /* Focused selectbox effect */
-    div[data-baseweb="select"] > div:focus-within {
-        border-color: #80BD47; /* Energy green border */
-        box-shadow: 0 0 10px #80BD47;
-    }
+        box-shadow: 0 0 30px #80BD47; /* Energy green glow */
+   }
     </style>
 """, unsafe_allow_html=True)
 
