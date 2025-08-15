@@ -4,6 +4,8 @@ import json
 import re
 from pathlib import Path
 import streamlit as st
+st.caption(f"Streamlit running: v{st.__version__}")
+
 # Background image URL (GitHub raw)
 BG_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/AdobeStock_209254754.jpeg"
 # Company logo (centered near the top)
