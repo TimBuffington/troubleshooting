@@ -465,6 +465,6 @@ div[data-baseweb="select"] > div {
 """, unsafe_allow_html=True)
 
 
-               f"Data source: {data_origin}. Streamlit v{st.__version__}")
+f"Data source: {data_origin}. Streamlit v{st.__version__}")
 else:
     st.stop()
