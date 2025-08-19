@@ -116,7 +116,7 @@ st.markdown("""
     <style>
     /* Global style for st.info alert boxes */
 [data-testid="stAlert"][class*="stInfo"] {
-  background: rgba(26,38,46,0.85) !important; /* dark slate background */
+  background: #F6F2E2 !important; /* dark slate background */
   border: 1px solid #939598 !important;       /* grey border */
   color: #eaeaea !important;                  /* light text */
   border-radius: 12px !important;
