@@ -65,7 +65,7 @@ st.markdown("""
     div[data-testid="stForm"] {
         border: none !important;      /* Remove any border */
         box-shadow: none !important;  /* Remove any shadow if applied */
-        background-color: #000000 !important; /* Optional: make background transparent */
+        background-color: none !important; /* Optional: make background transparent */
         padding: 0 !important;        /* Reset container padding */
         margin: 0 !important;         /* Reset container margin */
     }
@@ -114,6 +114,28 @@ st.markdown("""
 
 st.markdown("""
     <style>
+    /* Global style for st.info alert boxes */
+[data-testid="stAlert"][class*="stInfo"] {
+  background: rgba(26,38,46,0.85) !important; /* dark slate background */
+  border: 1px solid #939598 !important;       /* grey border */
+  color: #eaeaea !important;                  /* light text */
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+
+/* Remove the default info icon */
+[data-testid="stAlert"][class*="stInfo"] svg {
+  display: none !important;
+}
+
+/* Ensure the text inside inherits your styles */
+[data-testid="stAlert"][class*="stInfo"] p {
+  margin: 0 !important;
+  color: #F6F2E2 !important;
+  font-weight: 600 !important;
+}
+
     /* Base style for text input */
     input[type="text"] {
         background-color: #000000; /* Black background */
