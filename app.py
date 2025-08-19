@@ -6,47 +6,59 @@ import re
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Optional, Tuple, List, Dict
-
+import base64
 import requests
 import streamlit as st
 
 st.set_page_config(page_title="EBOSS® Falt Code Lookup", layout="centered")
 
-# -------------------- Branding (no fill) --------------------
+
+
+def to_data_uri(url: str) -> str:
+    r = requests.get(url, timeout=15)
+    r.raise_for_status()
+    mime = r.headers.get("Content-Type", "image/png").split(";")[0]
+    b64 = base64.b64encode(r.content).decode("utf-8")
+    return f"data:{mime};base64,{b64}"
+
 BG_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/AdobeStock_209254754.jpeg"
 LOGO_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
 
+BG_DATA = to_data_uri(BG_URL)
+LOGO_DATA = to_data_uri(LOGO_URL)
+
 st.markdown(f"""
 <style>
-/* Full-bleed background */
 [data-testid="stAppViewContainer"] {{
-  background-image: url('{BG_URL}');
+  background-image: url('{BG_DATA}');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }}
-/* Keep app areas transparent */
 .block-container {{ background: transparent !important; }}
 [data-testid="stHeader"] {{ background: rgba(0,0,0,0) !important; }}
 [data-testid="stSidebar"] > div:first-child {{ background: rgba(0,0,0,0) !important; }}
 
-/* Typography over photo */
 .app-title {{ font-size: 1.8rem; font-weight: 700; margin-bottom: .25rem; text-shadow: 0 2px 8px rgba(0,0,0,.45); }}
 .muted {{ color: #eaeaea; text-shadow: 0 1px 4px rgba(0,0,0,.35); }}
 
-/* Centered logo */
 .logo-wrap {{
   display: flex; align-items: center; justify-content: center;
   margin: 0.25rem 0 0.75rem 0;
 }}
-.logo-wrap img {{ max-width: min(420px, 70vw); height: auto; filter: drop-shadow(0 4px 12px rgba(0,0,0,.45)); }}
+.logo-wrap img {{
+  max-width: min(420px, 70vw);
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.45));
+}}
 </style>
 
 <div class="logo-wrap">
-  <img src="{LOGO_URL}" alt="Alliance North America logo">
+  <img src="{LOGO_DATA}" alt="Alliance North America logo">
 </div>
 """, unsafe_allow_html=True)
+
 
 st.markdown("""
     <style>
