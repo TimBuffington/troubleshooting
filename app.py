@@ -59,8 +59,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-
- st.markdown("""
+st.markdown("""
     <style>
     /* Remove border from the outer container of your form section */
     div[data-testid="stForm"] {
