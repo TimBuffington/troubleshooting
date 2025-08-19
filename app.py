@@ -36,7 +36,7 @@ st.markdown(f"""
   background-repeat: no-repeat;
   background-attachment: fixed;
 }}
-.block-container {{ background: transparent !important; }}
+.block-container {{ background: none !important; }}
 [data-testid="stHeader"] {{ background: rgba(0,0,0,0) !important; }}
 [data-testid="stSidebar"] > div:first-child {{ background: rgba(0,0,0,0) !important; }}
 
