@@ -59,19 +59,19 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-#
-# st.markdown("""
- #   <style>
- #   /* Remove border from the outer container of your form section */
- #   div[data-testid="stForm"] {
- #       border: none !important;      /* Remove any border */
- #       box-shadow: none !important;  /* Remove any shadow if applied */
- #       background-color: #000000 !important; /* Optional: make background transparent */
- #       padding: 0 !important;        /* Reset container padding */
- #       margin: 0 !important;         /* Reset container margin */
- #   }
- #   </style>
-# """, unsafe_allow_html=True)
+
+ st.markdown("""
+    <style>
+    /* Remove border from the outer container of your form section */
+    div[data-testid="stForm"] {
+        border: none !important;      /* Remove any border */
+        box-shadow: none !important;  /* Remove any shadow if applied */
+        background-color: #000000 !important; /* Optional: make background transparent */
+        padding: 0 !important;        /* Reset container padding */
+        margin: 0 !important;         /* Reset container margin */
+    }
+    </style>
+ """, unsafe_allow_html=True)
 
 st.markdown("""
     <style>
