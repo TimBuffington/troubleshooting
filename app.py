@@ -1,3 +1,4 @@
+```python
 import streamlit as st
 import requests
 import base64
@@ -283,4 +284,51 @@ if faults:
             user_code_raw = st.text_input("Fault Code", placeholder="e.g., F91", key="fc_code_raw")
         submitted = st.form_submit_button("Search")
 
-    if
+    if submitted:
+        code = normalize_user_input_code(user_code_raw)
+        if not code:
+            st.error("Please enter a fault code (e.g., F91).")
+        else:
+            primary, alternatives = find_fault(faults, selected_equipment, code)
+            if primary:
+                st.session_state["fc_result"] = primary
+                st.session_state["fc_show_modal"] = False
+            elif alternatives:
+                st.session_state["fc_alt_matches"] = alternatives
+                st.session_state["fc_alt_prompt"] = (
+                    f"Fault code {code} was not found in {selected_equipment}, "
+                    f"but it exists in: {', '.join(sorted({a['equipment'] for a in alternatives}))}."
+                )
+                st.session_state["fc_show_modal"] = True
+                if "fc_result" in st.session_state:
+                    del st.session_state["fc_result"]
+            else:
+                reset_state()
+                st.warning(f"No results found for {code} in any dictionary.")
+
+    if st.session_state.get("fc_show_modal"):
+        with modal_ctx("Found in a different equipment"):
+            st.info(st.session_state.get("fc_alt_prompt", "Match found elsewhere."))
+            options = st.session_state.get("fc_alt_matches", [])
+            label_map = {f"{e['equipment']} – {e['fault_code_full']}": i for i, e in enumerate(options)}
+            choice_label = st.radio("Choose which one to view:", list(label_map.keys()), index=0)
+
+            col_a, col_b = st.columns(2)
+            if col_a.button("Yes, show it"):
+                idx = label_map[choice_label]
+                st.session_state["fc_result"] = options[idx]
+                st.session_state["fc_show_modal"] = False
+                safe_rerun()
+            if col_b.button("Cancel"):
+                reset_state()
+                safe_rerun()
+
+    if "fc_result" in st.session_state:
+        show_result(st.session_state["fc_result"])
+        st.write("")
+        if st.button("Clear"):
+            reset_state()
+            safe_rerun()
+        st.caption("Tip: you can type just the number (e.g., 91) or 'F91'.")
+```
+
