@@ -17,6 +17,11 @@ st.set_page_config(page_title="EBOSS® Fault Code Lookup", page_icon="🛠️", 
 # ----------------------------
 def _has(attr: str) -> bool:
     return callable(getattr(st, attr, None))
+def safe_rerun() -> None:
+    """Version-agnostic rerun (no recursion, no contextmanager)."""
+    rerun_fn = getattr(st, "rerun", None) or getattr(st, "experimental_rerun", None)
+    if callable(rerun_fn):
+        rerun_fn()
 
 @contextmanager
 def modal_ctx(title: str):
@@ -27,13 +32,6 @@ def modal_ctx(title: str):
     else:
         with st.expander(f"🔎 {title}", expanded=True):
             yield
-
-def safe_rerun():
-    """Version-agnostic rerun (no recursion)."""
-    if callable(getattr(st, "rerun", None)):
-        st.rerun()
-    elif callable(getattr(st, "experimental_rerun", None)):
-        st.experimental_rerun()
 
 # ----------------------------
 # Branding / Global CSS
@@ -279,13 +277,13 @@ if st.session_state.get("fc_show_modal"):
         choice_label = st.radio("Choose which one to view:", list(label_map.keys()), index=0)
         cA, cB = st.columns(2)
         if cA.button("Yes, show it"):
-            idx = label_map[choice_label]
-            st.session_state["fc_result"] = options[idx]
-            st.session_state["fc_show_modal"] = False
-            safe_rerun()
+        st.session_state["fc_result"] = options[idx]
+        st.session_state["fc_show_modal"] = False
+        safe_rerun()
+
         if cB.button("Cancel"):
-            reset_state()
-            safe_rerun()
+        reset_state()  # clears fc_* including fc_show_modal
+        safe_rerun()
 
 # ----------------------------
 # Result rendering
