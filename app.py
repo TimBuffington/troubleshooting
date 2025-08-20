@@ -41,6 +41,18 @@ LOGO_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs
 
 st.markdown(f"""
 <style>
+/* =================== FOUNDATION =================== */
+:root {{
+  --alpine-white: #FFFFFF;
+  --energy-green: #80BD47;   /* ANA Energy Green */
+  --light-grey:  #D0D4D9;
+  --black:       #000000;
+
+  --fg-strong:   #ffffff;    /* keeps older refs working */
+  --fg:          #f5f7fa;
+  --fg-dim:      #d5dbe3;
+}}
+
 /* Background */
 [data-testid="stAppViewContainer"] {{
   background-image: url('{BG_URL}');
@@ -49,12 +61,12 @@ st.markdown(f"""
   background-repeat: no-repeat;
   background-attachment: fixed;
 }}
-/* iOS: avoid fixed background repaint + improve legibility while scrolling */
 @media (max-width: 480px) {{
+  /* iOS/mobile: avoid fixed bg repaint jank */
   [data-testid="stAppViewContainer"] {{ background-attachment: scroll; }}
 }}
 
-/* Chrome */
+/* Shell chrome */
 .block-container {{ background: transparent !important; }}
 [data-testid="stHeader"] {{ background: rgba(0,0,0,0) !important; }}
 [data-testid="stSidebar"] > div:first-child {{ background: rgba(0,0,0,0) !important; }}
@@ -65,44 +77,110 @@ st.markdown(f"""
   margin: .25rem 0 .75rem 0;
 }}
 .logo-wrap img {{
-  max-width: min(420px, 70vw); height:auto;
+  max-width: min(420px, 70vw);
+  height:auto;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,.45));
 }}
 
-/* -------- Force readable foreground regardless of theme -------- */
-:root {{
-  --fg-strong: #ffffff;
-  --fg: #f5f7fa;
-  --fg-dim: #d5dbe3;
-}}
-
+/* =================== GLOBAL TYPOGRAPHY =================== */
+/* Force Arial Bold Alpine White + subtle shadow across app */
 html, body, [class*="stMarkdown"], [class*="stText"],
 [data-testid="stMarkdownContainer"], [data-testid="stCaption"] p,
 [data-testid="stAlert"] p, .stRadio label, .stCheckbox label,
-.stSelectbox label, .stTextInput label {{
-  color: var(--fg) !important;
-  -webkit-text-fill-color: var(--fg) !important;  /* iOS Safari */
-  text-shadow: 0 1px 2px rgba(0,0,0,.7);
+.stSelectbox label, .stTextInput label, .stNumberInput label, .stTextArea label {{
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 700 !important;
+  color: var(--alpine-white) !important;
+  -webkit-text-fill-color: var(--alpine-white) !important; /* iOS Safari */
+  text-shadow: 0 1px 2px rgba(0,0,0,.85);
 }}
-
-.stMarkdown strong, .stMarkdown b {{ color: var(--fg-strong) !important; }}
+.stMarkdown strong, .stMarkdown b {{
+  color: var(--alpine-white) !important;
+}}
 .stMarkdown li::marker {{ color: var(--fg-dim) !important; }}
 
 /* Headings */
 .app-title {{
   font-size: 1.8rem; font-weight: 700; margin-bottom: .25rem;
-  color: var(--fg-strong); text-shadow: 0 2px 8px rgba(0,0,0,.6);
+  color: var(--alpine-white) !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,.7);
 }}
-.muted {{ color: var(--fg); }}
+.muted {{ color: var(--fg) !important; }}
 
-/* Inputs & buttons (blue area) */
-[data-testid="stForm"] [data-baseweb="select"],
-[data-testid="stForm"] input[type="text"] {{ border-radius: 10px; }}
-[data-testid="stForm"] .stButton > button {{
-  border-radius: 12px; padding: .6rem 1.1rem; color: #111 !important;
+/* =================== FORM CONTROLS (UNIFIED LOOK) =================== */
+/* Labels already handled above; fields share the same skin */
+
+/* SELECT: visible control */
+[data-testid="stSelectbox"] > div[data-baseweb="select"] > div,
+/* TEXT / NUMBER inputs */
+[data-testid="stTextInput"]  input,
+[data-testid="stNumberInput"] input,
+/* TEXTAREA */
+textarea[data-baseweb="textarea"] {{
+  background: var(--black) !important;
+  color: var(--alpine-white) !important;
+  -webkit-text-fill-color: var(--alpine-white) !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 700 !important;
+  border: 1px solid var(--light-grey) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  caret-color: var(--alpine-white) !important;
 }}
 
-/* Expander header (red bar) */
+/* Placeholders */
+[data-testid="stTextInput"]  input::placeholder,
+[data-testid="stNumberInput"] input::placeholder,
+textarea[data-baseweb="textarea"]::placeholder {{
+  color: var(--alpine-white) !important;
+  opacity: .65 !important;
+}}
+
+/* Hover/Focus = Energy-Green glow (all these controls) */
+[data-testid="stSelectbox"] > div[data-baseweb="select"] > div:hover,
+[data-testid="stSelectbox"] > div[data-baseweb="select"] > div:focus,
+[data-testid="stSelectbox"] [data-baseweb="select"]:focus-within,
+[data-testid="stTextInput"]  input:hover,
+[data-testid="stTextInput"]  input:focus,
+[data-testid="stNumberInput"] input:hover,
+[data-testid="stNumberInput"] input:focus,
+textarea[data-baseweb="textarea"]:hover,
+textarea[data-baseweb="textarea"]:focus {{
+  border-color: var(--energy-green) !important;
+  box-shadow: 0 0 0 3px rgba(128,189,71,.55) !important;
+  outline: none !important;
+}}
+
+/* Select chevron icon */
+[data-testid="stSelectbox"] [data-baseweb="select"] svg {{
+  color: var(--alpine-white) !important;
+  fill:  var(--alpine-white) !important;
+}}
+
+/* Dropdown menu */
+div[data-baseweb="menu"] {{
+  background: var(--black) !important;
+  border: 1px solid var(--light-grey) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,.55) !important;
+}}
+div[data-baseweb="menu"] li {{
+  color: var(--alpine-white) !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 700 !important;
+}}
+div[data-baseweb="menu"] li:hover {{
+  background: rgba(128,189,71,.28) !important; /* Energy-Green hover */
+}}
+
+/* Number input steppers/icons visible on dark */
+[data-testid="stNumberInput"] svg {{
+  color: var(--alpine-white) !important;
+  fill:  var(--alpine-white) !important;
+}}
+
+/* =================== OTHER UI ELEMENTS YOU ALREADY HAD =================== */
+/* Expander header */
 [data-testid="stExpander"] > details > summary {{
   background: rgba(0,0,0,.35);
   border-radius: 10px;
@@ -110,7 +188,7 @@ html, body, [class*="stMarkdown"], [class*="stText"],
   font-weight: 700;
 }}
 
-/* Info box (yellow) inside modal/expander */
+/* Info box */
 [data-testid="stExpander"] [data-testid="stAlert"],
 [data-testid="stModal"]    [data-testid="stAlert"] {{
   border-radius: 12px;
@@ -118,14 +196,19 @@ html, body, [class*="stMarkdown"], [class*="stText"],
   backdrop-filter: blur(2px);
 }}
 
-/* Radio + action buttons (green area) */
+/* Radio + action buttons inside modal/expander */
 [data-testid="stExpander"] [data-testid="stRadio"],
-[data-testid="stModal"]    [data-testid="stRadio"] {{ padding: .25rem .25rem .5rem; }}
+[data-testid="stModal"]    [data-testid="stRadio"] {{
+  padding: .25rem .25rem .5rem;
+}}
 [data-testid="stExpander"] [data-testid="stRadio"] label,
-[data-testid="stModal"]    [data-testid="stRadio"] label {{ font-weight: 600; }}
+[data-testid="stModal"]    [data-testid="stRadio"] label {{
+  font-weight: 700; /* keep bold */
+}}
 [data-testid="stExpander"] .stButton > button,
 [data-testid="stModal"]    .stButton > button {{
   border-radius: 12px; padding: .6rem 1.1rem; margin-right: .5rem;
+  /* text color inherits Alpine White from global typography */
 }}
 
 /* Result glass panel */
@@ -137,6 +220,12 @@ html, body, [class*="stMarkdown"], [class*="stText"],
   backdrop-filter: blur(2px);
 }}
 </style>
+
+<div class="logo-wrap">
+  <img src="{LOGO_URL}" alt="Alliance North America logo">
+</div>
+""", unsafe_allow_html=True)
+
 
 <div class="logo-wrap">
   <img src="{LOGO_URL}" alt="Alliance North America logo">
