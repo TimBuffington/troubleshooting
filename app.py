@@ -55,7 +55,7 @@ st.markdown(f"""
 
 /* Background */
 [data-testid="stAppViewContainer"] {{
-  background-image: url('{BG_URL}');
+  background-image: urL {BG_URL};
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
