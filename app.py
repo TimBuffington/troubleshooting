@@ -230,7 +230,7 @@ div[data-baseweb="menu"] li:hover {{
 <div class="logo-wrap">
   <img src="%s" alt="Alliance North America logo">
 </div>
-""" % (BG_URL, LOGO_URL))
+""" % ((BG_URL, LOGO_URL))
 
 st.markdown(css, unsafe_allow_html=True)
 
