@@ -39,73 +39,73 @@ def modal_ctx(title: str):
 BG_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/AdobeStock_209254754.jpeg"
 LOGO_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
 
-css = """
+st.markdown(f"""
 <style>
 /* =================== FOUNDATION =================== */
-:root {
+:root {{
   --alpine-white: #FFFFFF;
   --energy-green: #80BD47;   /* ANA Energy Green */
   --light-grey:  #D0D4D9;
   --black:       #000000;
 
-  --fg-strong:   #ffffff;    /* legacy refs */
+  --fg-strong:   #ffffff;    /* keeps older refs working */
   --fg:          #f5f7fa;
   --fg-dim:      #d5dbe3;
-}
+}}
 
 /* Background */
-[data-testid="stAppViewContainer"] {
-  background-image: url('%s');
+[data-testid="stAppViewContainer"] {{
+  background-image: url('{BG_URL}');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-}
-@media (max-width: 480px) {
+}}
+@media (max-width: 480px) {{
   /* iOS/mobile: avoid fixed bg repaint jank */
-  [data-testid="stAppViewContainer"] { background-attachment: scroll; }
-}
+  [data-testid="stAppViewContainer"] {{ background-attachment: scroll; }}
+}}
 
 /* Shell chrome */
-.block-container { background: transparent !important; }
-[data-testid="stHeader"] { background: rgba(0,0,0,0) !important; }
-[data-testid="stSidebar"] > div:first-child { background: rgba(0,0,0,0) !important; }
+.block-container {{ background: transparent !important; }}
+[data-testid="stHeader"] {{ background: rgba(0,0,0,0) !important; }}
+[data-testid="stSidebar"] > div:first-child {{ background: rgba(0,0,0,0) !important; }}
 
 /* Logo */
-.logo-wrap {
+.logo-wrap {{
   display:flex; align-items:center; justify-content:center;
   margin: .25rem 0 .75rem 0;
-}
-.logo-wrap img {
+}}
+.logo-wrap img {{
   max-width: min(420px, 70vw);
   height:auto;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,.45));
-}
+}}
 
 /* =================== GLOBAL TYPOGRAPHY =================== */
 /* Force Arial Bold Alpine White + subtle shadow across app */
 html, body, [class*="stMarkdown"], [class*="stText"],
 [data-testid="stMarkdownContainer"], [data-testid="stCaption"] p,
 [data-testid="stAlert"] p, .stRadio label, .stCheckbox label,
-.stSelectbox label, .stTextInput label, .stNumberInput label, .stTextArea label {
+.stSelectbox label, .stTextInput label, .stNumberInput label, .stTextArea label {{
   font-family: Arial, Helvetica, sans-serif !important;
   font-weight: 700 !important;
   color: var(--alpine-white) !important;
   -webkit-text-fill-color: var(--alpine-white) !important; /* iOS Safari */
   text-shadow: 0 1px 2px rgba(0,0,0,.85);
-}
-.stMarkdown strong, .stMarkdown b {
+}}
+.stMarkdown strong, .stMarkdown b {{
   color: var(--alpine-white) !important;
-}
-.stMarkdown li::marker { color: var(--fg-dim) !important; }
+}}
+.stMarkdown li::marker {{ color: var(--fg-dim) !important; }}
 
 /* Headings */
-.app-title {
+.app-title {{
   font-size: 1.8rem; font-weight: 700; margin-bottom: .25rem;
   color: var(--alpine-white) !important;
   text-shadow: 0 2px 8px rgba(0,0,0,.7);
-}
-.muted { color: var(--fg) !important; }
+}}
+.muted {{ color: var(--fg) !important; }}
 
 /* =================== FORM CONTROLS (UNIFIED LOOK) =================== */
 /* Labels already handled above; fields share the same skin */
@@ -116,7 +116,7 @@ html, body, [class*="stMarkdown"], [class*="stText"],
 [data-testid="stTextInput"]  input,
 [data-testid="stNumberInput"] input,
 /* TEXTAREA */
-textarea[data-baseweb="textarea"] {
+textarea[data-baseweb="textarea"] {{
   background: var(--black) !important;
   color: var(--alpine-white) !important;
   -webkit-text-fill-color: var(--alpine-white) !important;
@@ -126,15 +126,15 @@ textarea[data-baseweb="textarea"] {
   border-radius: 10px !important;
   box-shadow: none !important;
   caret-color: var(--alpine-white) !important;
-}
+}}
 
 /* Placeholders */
 [data-testid="stTextInput"]  input::placeholder,
 [data-testid="stNumberInput"] input::placeholder,
-textarea[data-baseweb="textarea"]::placeholder {
+textarea[data-baseweb="textarea"]::placeholder {{
   color: var(--alpine-white) !important;
   opacity: .65 !important;
-}
+}}
 
 /* Hover/Focus = Energy-Green glow (all these controls) */
 [data-testid="stSelectbox"] > div[data-baseweb="select"] > div:hover,
@@ -145,81 +145,87 @@ textarea[data-baseweb="textarea"]::placeholder {
 [data-testid="stNumberInput"] input:hover,
 [data-testid="stNumberInput"] input:focus,
 textarea[data-baseweb="textarea"]:hover,
-textarea[data-baseweb="textarea"]:focus {
+textarea[data-baseweb="textarea"]:focus {{
   border-color: var(--energy-green) !important;
   box-shadow: 0 0 0 3px rgba(128,189,71,.55) !important;
   outline: none !important;
-}
+}}
 
 /* Select chevron icon */
-[data-testid="stSelectbox"] [data-baseweb="select"] svg {
+[data-testid="stSelectbox"] [data-baseweb="select"] svg {{
   color: var(--alpine-white) !important;
   fill:  var(--alpine-white) !important;
-}
+}}
 
 /* Dropdown menu */
-div[data-baseweb="menu"]{
+div[data-baseweb="menu"] {{
   background: var(--black) !important;
   border: 1px solid var(--light-grey) !important;
   border-radius: 10px !important;
   box-shadow: 0 8px 22px rgba(0,0,0,.55) !important;
-}
-div[data-baseweb="menu"] li{
+}}
+div[data-baseweb="menu"] li {{
   color: var(--alpine-white) !important;
   font-family: Arial, Helvetica, sans-serif !important;
   font-weight: 700 !important;
-}
-div[data-baseweb="menu"] li:hover{
+}}
+div[data-baseweb="menu"] li:hover {{
   background: rgba(128,189,71,.28) !important; /* Energy-Green hover */
-}
+}}
 
 /* Number input steppers/icons visible on dark */
-[data-testid="stNumberInput"] svg{
+[data-testid="stNumberInput"] svg {{
   color: var(--alpine-white) !important;
   fill:  var(--alpine-white) !important;
-}
+}}
 
 /* =================== OTHER UI ELEMENTS YOU ALREADY HAD =================== */
 /* Expander header */
-[data-testid="stExpander"] > details > summary {
+[data-testid="stExpander"] > details > summary {{
   background: rgba(0,0,0,.35);
   border-radius: 10px;
   padding: .6rem .9rem;
   font-weight: 700;
-}
+}}
 
 /* Info box */
 [data-testid="stExpander"] [data-testid="stAlert"],
-[data-testid="stModal"]    [data-testid="stAlert"] {
+[data-testid="stModal"]    [data-testid="stAlert"] {{
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,.12);
   backdrop-filter: blur(2px);
-}
+}}
 
 /* Radio + action buttons inside modal/expander */
 [data-testid="stExpander"] [data-testid="stRadio"],
-[data-testid="stModal"]    [data-testid="stRadio"] {
+[data-testid="stModal"]    [data-testid="stRadio"] {{
   padding: .25rem .25rem .5rem;
-}
+}}
 [data-testid="stExpander"] [data-testid="stRadio"] label,
-[data-testid="stModal"]    [data-testid="stRadio"] label {
+[data-testid="stModal"]    [data-testid="stRadio"] label {{
   font-weight: 700; /* keep bold */
-}
+}}
 [data-testid="stExpander"] .stButton > button,
-[data-testid="stModal"]    .stButton > button {
+[data-testid="stModal"]    .stButton > button {{
   border-radius: 12px; padding: .6rem 1.1rem; margin-right: .5rem;
   /* text color inherits Alpine White from global typography */
-}
+}}
 
 /* Result glass panel */
-.result-box {
+.result-box {{
   background: rgba(0,0,0,.45);
   border: 1px solid rgba(255,255,255,.15);
   border-radius: 12px;
   padding: 12px 16px;
   backdrop-filter: blur(2px);
-}
+}}
 </style>
+
+<div class="logo-wrap">
+  <img src="{LOGO_URL}" alt="Alliance North America logo">
+</div>
+""", unsafe_allow_html=True)
+
 
 <div class="logo-wrap">
   <img src="%s" alt="Alliance North America logo">
