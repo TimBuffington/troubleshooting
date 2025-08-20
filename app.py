@@ -69,7 +69,8 @@ st.markdown(f"""
 /* Shell chrome */
 .block-container {{ background: transparent !important; }}
 [data-testid="stHeader"] {{ background: rgba(0,0,0,0) !important; }}
-[data-testid="stSidebar"] > div:first-child {{ background: rgba(0,0,0,0) !important; }}
+[data-testid="stSidebar"] > div:first-child {{ background: rgba(0,0,0,0) !important;
+}}
 
 /* Logo */
 .logo-wrap {{
@@ -97,7 +98,8 @@ html, body, [class*="stMarkdown"], [class*="stText"],
 .stMarkdown strong, .stMarkdown b {{
   color: var(--alpine-white) !important;
 }}
-.stMarkdown li::marker {{ color: var(--fg-dim) !important; }}
+.stMarkdown li::marker {{ color: var(--fg-dim) !important;
+}}
 
 /* Headings */
 .app-title {{
@@ -225,15 +227,6 @@ div[data-baseweb="menu"] li:hover {{
   <img src="{LOGO_URL}" alt="Alliance North America logo">
 </div>
 """, unsafe_allow_html=True)
-
-
-<div class="logo-wrap">
-  <img src="%s" alt="Alliance North America logo">
-</div>
-""" % ((BG_URL, LOGO_URL))
-
-st.markdown(css, unsafe_allow_html=True)
-
 
 # ----------------------------
 # Data Load / Index
