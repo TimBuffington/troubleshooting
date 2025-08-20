@@ -277,13 +277,13 @@ if st.session_state.get("fc_show_modal"):
         choice_label = st.radio("Choose which one to view:", list(label_map.keys()), index=0)
         cA, cB = st.columns(2)
         if cA.button("Yes, show it"):
-        st.session_state["fc_result"] = options[idx]
-        st.session_state["fc_show_modal"] = False
-        safe_rerun()
+            st.session_state["fc_result"] = options[idx]
+            st.session_state["fc_show_modal"] = False
+            safe_rerun()
 
         if cB.button("Cancel"):
-        reset_state()  # clears fc_* including fc_show_modal
-        safe_rerun()
+            reset_state()  # clears fc_* including fc_show_modal
+            safe_rerun()
 
 # ----------------------------
 # Result rendering
