@@ -39,87 +39,74 @@ def modal_ctx(title: str):
 BG_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/AdobeStock_209254754.jpeg"
 LOGO_URL = "https://raw.githubusercontent.com/TimBuffington/troubleshooting/refs/heads/main/assets/ANA-ENERGY-LOGO-HORIZONTAL-WHITE-GREEN.png"
 
-st.markdown(f"""
+css = """
 <style>
 /* =================== FOUNDATION =================== */
-:root {{
+:root {
   --alpine-white: #FFFFFF;
-  --energy-green: #80BD47;   /* ANA Energy Green */
+  --energy-green: #80BD47;  /* ANA Energy Green */
   --light-grey:  #D0D4D9;
-  --black:       #000000;
+  --charcoal:    #636569;   /* ANA Charcoal (99,101,105) */
+}
 
-  --fg-strong:   #ffffff;    /* keeps older refs working */
-  --fg:          #f5f7fa;
-  --fg-dim:      #d5dbe3;
-}}
-
-/* Background */
-[data-testid="stAppViewContainer"] {{
-  background-image: urL {BG_URL};
+/* Background (kept active) */
+[data-testid="stAppViewContainer"] {
+  background-image: url('%s');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-}}
-@media (max-width: 480px) {{
-  /* iOS/mobile: avoid fixed bg repaint jank */
-  [data-testid="stAppViewContainer"] {{ background-attachment: scroll; }}
-}}
+}
+/* iOS/mobile: avoid fixed-bg repaint jank */
+@media (max-width: 480px) {
+  [data-testid="stAppViewContainer"] { background-attachment: scroll; }
+}
 
-/* Shell chrome */
-.block-container {{ background: transparent !important; }}
-[data-testid="stHeader"] {{ background: rgba(0,0,0,0) !important; }}
-[data-testid="stSidebar"] > div:first-child {{ background: rgba(0,0,0,0) !important;
-}}
+/* Shell chrome — make sure nothing blocks bg/logo */
+.block-container { background: transparent !important; }
+[data-testid="stHeader"] { background: rgba(0,0,0,0) !important; }
+[data-testid="stSidebar"] > div:first-child { background: rgba(0,0,0,0) !important; }
 
-/* Logo */
-.logo-wrap {{
+/* Logo (kept active) */
+.logo-wrap {
   display:flex; align-items:center; justify-content:center;
   margin: .25rem 0 .75rem 0;
-}}
-.logo-wrap img {{
-  max-width: min(420px, 70vw);
-  height:auto;
+}
+.logo-wrap img {
+  max-width: min(420px, 70vw); height:auto;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,.45));
-}}
+}
 
 /* =================== GLOBAL TYPOGRAPHY =================== */
 /* Force Arial Bold Alpine White + subtle shadow across app */
 html, body, [class*="stMarkdown"], [class*="stText"],
 [data-testid="stMarkdownContainer"], [data-testid="stCaption"] p,
 [data-testid="stAlert"] p, .stRadio label, .stCheckbox label,
-.stSelectbox label, .stTextInput label, .stNumberInput label, .stTextArea label {{
+.stSelectbox label, .stTextInput label, .stNumberInput label, .stTextArea label {
   font-family: Arial, Helvetica, sans-serif !important;
   font-weight: 700 !important;
   color: var(--alpine-white) !important;
   -webkit-text-fill-color: var(--alpine-white) !important; /* iOS Safari */
   text-shadow: 0 1px 2px rgba(0,0,0,.85);
-}}
-.stMarkdown strong, .stMarkdown b {{
-  color: var(--alpine-white) !important;
-}}
-.stMarkdown li::marker {{ color: var(--fg-dim) !important;
-}}
+}
+.stMarkdown strong, .stMarkdown b { color: var(--alpine-white) !important; }
 
-/* Headings */
-.app-title {{
+/* Optional heading helper if you use .app-title / .muted */
+.app-title {
   font-size: 1.8rem; font-weight: 700; margin-bottom: .25rem;
-  color: var(--alpine-white) !important;
-  text-shadow: 0 2px 8px rgba(0,0,0,.7);
-}}
-.muted {{ color: var(--fg) !important; }}
+  color: var(--alpine-white) !important; text-shadow: 0 2px 8px rgba(0,0,0,.7);
+}
+.muted { color: #eef2f6 !important; }
 
 /* =================== FORM CONTROLS (UNIFIED LOOK) =================== */
-/* Labels already handled above; fields share the same skin */
-
-/* SELECT: visible control */
+/* SELECT visible control */
 [data-testid="stSelectbox"] > div[data-baseweb="select"] > div,
 /* TEXT / NUMBER inputs */
 [data-testid="stTextInput"]  input,
 [data-testid="stNumberInput"] input,
 /* TEXTAREA */
-textarea[data-baseweb="textarea"] {{
-  background: var(--black) !important;
+textarea[data-baseweb="textarea"] {
+  background: var(--charcoal) !important;
   color: var(--alpine-white) !important;
   -webkit-text-fill-color: var(--alpine-white) !important;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -128,17 +115,17 @@ textarea[data-baseweb="textarea"] {{
   border-radius: 10px !important;
   box-shadow: none !important;
   caret-color: var(--alpine-white) !important;
-}}
+}
 
 /* Placeholders */
 [data-testid="stTextInput"]  input::placeholder,
 [data-testid="stNumberInput"] input::placeholder,
-textarea[data-baseweb="textarea"]::placeholder {{
+textarea[data-baseweb="textarea"]::placeholder {
   color: var(--alpine-white) !important;
   opacity: .65 !important;
-}}
+}
 
-/* Hover/Focus = Energy-Green glow (all these controls) */
+/* Hover/Focus = Energy-Green glow */
 [data-testid="stSelectbox"] > div[data-baseweb="select"] > div:hover,
 [data-testid="stSelectbox"] > div[data-baseweb="select"] > div:focus,
 [data-testid="stSelectbox"] [data-baseweb="select"]:focus-within,
@@ -146,87 +133,8 @@ textarea[data-baseweb="textarea"]::placeholder {{
 [data-testid="stTextInput"]  input:focus,
 [data-testid="stNumberInput"] input:hover,
 [data-testid="stNumberInput"] input:focus,
-textarea[data-baseweb="textarea"]:hover,
-textarea[data-baseweb="textarea"]:focus {{
-  border-color: var(--energy-green) !important;
-  box-shadow: 0 0 0 3px rgba(128,189,71,.55) !important;
-  outline: none !important;
-}}
+textarea[data-baseweb="tex]()
 
-/* Select chevron icon */
-[data-testid="stSelectbox"] [data-baseweb="select"] svg {{
-  color: var(--alpine-white) !important;
-  fill:  var(--alpine-white) !important;
-}}
-
-/* Dropdown menu */
-div[data-baseweb="menu"] {{
-  background: var(--black) !important;
-  border: 1px solid var(--light-grey) !important;
-  border-radius: 10px !important;
-  box-shadow: 0 8px 22px rgba(0,0,0,.55) !important;
-}}
-div[data-baseweb="menu"] li {{
-  color: var(--alpine-white) !important;
-  font-family: Arial, Helvetica, sans-serif !important;
-  font-weight: 700 !important;
-}}
-div[data-baseweb="menu"] li:hover {{
-  background: rgba(128,189,71,.28) !important; /* Energy-Green hover */
-}}
-
-/* Number input steppers/icons visible on dark */
-[data-testid="stNumberInput"] svg {{
-  color: var(--alpine-white) !important;
-  fill:  var(--alpine-white) !important;
-}}
-
-/* =================== OTHER UI ELEMENTS YOU ALREADY HAD =================== */
-/* Expander header */
-[data-testid="stExpander"] > details > summary {{
-  background: rgba(0,0,0,.35);
-  border-radius: 10px;
-  padding: .6rem .9rem;
-  font-weight: 700;
-}}
-
-/* Info box */
-[data-testid="stExpander"] [data-testid="stAlert"],
-[data-testid="stModal"]    [data-testid="stAlert"] {{
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.12);
-  backdrop-filter: blur(2px);
-}}
-
-/* Radio + action buttons inside modal/expander */
-[data-testid="stExpander"] [data-testid="stRadio"],
-[data-testid="stModal"]    [data-testid="stRadio"] {{
-  padding: .25rem .25rem .5rem;
-}}
-[data-testid="stExpander"] [data-testid="stRadio"] label,
-[data-testid="stModal"]    [data-testid="stRadio"] label {{
-  font-weight: 700; /* keep bold */
-}}
-[data-testid="stExpander"] .stButton > button,
-[data-testid="stModal"]    .stButton > button {{
-  border-radius: 12px; padding: .6rem 1.1rem; margin-right: .5rem;
-  /* text color inherits Alpine White from global typography */
-}}
-
-/* Result glass panel */
-.result-box {{
-  background: rgba(0,0,0,.45);
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 12px;
-  padding: 12px 16px;
-  backdrop-filter: blur(2px);
-}}
-</style>
-
-<div class="logo-wrap">
-  <img src="{LOGO_URL}" alt="Alliance North America logo">
-</div>
-""", unsafe_allow_html=True)
 
 # ----------------------------
 # Data Load / Index
