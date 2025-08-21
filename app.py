@@ -281,25 +281,47 @@ if submitted:
 # 🟥 RED — Modal/Expander header
 #      contains:
 #        🟨 YELLOW — info message
-#        🟩 GREEN  — radio & buttons
+#        🟩 GREEN  — radio (returns index) & buttons
 # ============================================================
 if st.session_state.get("fc_show_modal"):
     with modal_ctx("Found in a different equipment"):
         # 🟨 YELLOW — info
         st.info(st.session_state.get("fc_alt_prompt", "Match found elsewhere."))
-        # 🟩 GREEN — radio + actions
-        options = st.session_state.get("fc_alt_matches", [])
-        label_map = {f"{e['equipment']} – {e['fault_code_full']}": i for i, e in enumerate(options)}
-        choice_label = st.radio("Choose which one to view:", list(label_map.keys()), index=0)
-        cA, cB = st.columns(2)
-        if cA.button("Yes, show it"):
-            st.session_state["fc_result"] = options[idx]
-            st.session_state["fc_show_modal"] = False
-            safe_rerun()
 
-        if cB.button("Cancel"):
-            reset_state()  # clears fc_* including fc_show_modal
-            safe_rerun()
+        # 🟩 GREEN — radio returns the INDEX, not a label
+        options = st.session_state.get("fc_alt_matches", []) or []
+        if not options:
+            st.warning("No alternate matches available.")
+        else:
+            # Build a stable list of indices to choose from
+            n = len(options)
+            default_idx = st.session_state.get("fc_choice_idx", 0)
+            if not isinstance(default_idx, int) or default_idx < 0 or default_idx >= n:
+                default_idx = 0
+
+            # Radio shows labels but stores the integer index in state
+            st.radio(
+                "Choose which one to view:",
+                options=list(range(n)),
+                index=default_idx,
+                format_func=lambda i: f"{options[i]['equipment']} - {options[i]['fault_code_full']}",
+                key="fc_choice_idx",
+            )
+
+            cA, cB = st.columns(2)
+            if cA.button("Yes, show it"):
+                i = st.session_state.get("fc_choice_idx", 0)
+                # clamp index just in case
+                i = 0 if not isinstance(i, int) else max(0, min(i, n - 1))
+                st.session_state["fc_result"] = options[i]
+                st.session_state["fc_show_modal"] = False
+                safe_rerun()
+
+            if cB.button("Cancel"):
+                for k in ("fc_alt_matches", "fc_alt_prompt", "fc_choice_idx", "fc_choice_label", "fc_show_modal"):
+                    st.session_state.pop(k, None)
+                safe_rerun()
+
 
 # ----------------------------
 # Result rendering
