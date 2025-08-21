@@ -53,24 +53,14 @@ st.markdown(f"""
   --fg-dim:      #d5dbe3;
 }}
 
+/* Background */
 [data-testid="stAppViewContainer"] {{
-  background-image: url('{BG_URL}');
+  background-image: urL {BG_URL};
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }}
-@media (max-width: 480px) {{
-  [data-testid="stAppViewContainer"] {{ background-attachment: scroll; }}
-}}
-/* (rest of your CSS) */
-</style>
-
-<div class="logo-wrap">
-  <img src="{LOGO_URL}" alt="Alliance North America logo">
-</div>
-""", unsafe_allow_html=True)
-
 @media (max-width: 480px) {{
   /* iOS/mobile: avoid fixed bg repaint jank */
   [data-testid="stAppViewContainer"] {{ background-attachment: scroll; }}
@@ -366,40 +356,19 @@ if st.session_state.get("fc_show_modal"):
     with modal_ctx("Found in a different equipment"):
         # 🟨 YELLOW — info
         st.info(st.session_state.get("fc_alt_prompt", "Match found elsewhere."))
+        # 🟩 GREEN — radio + actions
+        options = st.session_state.get("fc_alt_matches", [])
+        label_map = {f"{e['equipment']} – {e['fault_code_full']}": i for i, e in enumerate(options)}
+        choice_label = st.radio("Choose which one to view:", list(label_map.keys()), index=0)
+        cA, cB = st.columns(2)
+        if cA.button("Yes, show it"):
+            st.session_state["fc_result"] = options[idx]
+            st.session_state["fc_show_modal"] = False
+            safe_rerun()
 
-        # 🟩 GREEN — radio + actions (robust: store index in session_state)
-        options = st.session_state.get("fc_alt_matches", []) or []
-        if not options:
-            # Nothing to choose from; bail out gracefully
-            st.warning("No alternate matches available.")
-        else:
-            # Build labels once; avoid Unicode dash issues later by storing the index
-            labels = [f"{e['equipment']} - {e['fault_code_full']}" for e in options]
-
-            # Current selection index (persisted)
-            sel_idx = int(st.session_state.get("fc_choice_idx", 0))
-            if sel_idx < 0 or sel_idx >= len(labels):
-                sel_idx = 0
-
-            # Show radio; store the chosen index in state
-            choice = st.radio("Choose which one to view:", labels, index=sel_idx, key="fc_choice_label")
-            st.session_state["fc_choice_idx"] = labels.index(choice) if choice in labels else 0
-
-            cA, cB = st.columns(2)
-            if cA.button("Yes, show it"):
-                idx = int(st.session_state.get("fc_choice_idx", 0))
-                if 0 <= idx < len(options):
-                    st.session_state["fc_result"] = options[idx]
-                else:
-                    st.session_state["fc_result"] = options[0]
-                st.session_state["fc_show_modal"] = False
-                safe_rerun()
-
-            if cB.button("Cancel"):
-                # Clear all modal-related state
-                for k in ("fc_alt_matches", "fc_alt_prompt", "fc_choice_idx", "fc_choice_label", "fc_show_modal"):
-                    st.session_state.pop(k, None)
-                safe_rerun()
+        if cB.button("Cancel"):
+            reset_state()  # clears fc_* including fc_show_modal
+            safe_rerun()
 
 # ----------------------------
 # Result rendering
