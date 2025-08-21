@@ -53,14 +53,24 @@ st.markdown(f"""
   --fg-dim:      #d5dbe3;
 }}
 
-/* Background */
 [data-testid="stAppViewContainer"] {{
-  background-image: urL {BG_URL};
+  background-image: url('{BG_URL}');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }}
+@media (max-width: 480px) {{
+  [data-testid="stAppViewContainer"] {{ background-attachment: scroll; }}
+}}
+/* (rest of your CSS) */
+</style>
+
+<div class="logo-wrap">
+  <img src="{LOGO_URL}" alt="Alliance North America logo">
+</div>
+""", unsafe_allow_html=True)
+
 @media (max-width: 480px) {{
   /* iOS/mobile: avoid fixed bg repaint jank */
   [data-testid="stAppViewContainer"] {{ background-attachment: scroll; }}
