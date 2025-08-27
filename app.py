@@ -9,9 +9,11 @@ import re
 from pathlib import Path
 from contextlib import contextmanager
 import streamlit as st
+# after logo / title block, insert:
+
 
 st.set_page_config(page_title="EBOSS® Fault Code Lookup", layout="centered")
-
+st.markdown('<div style="text-align:center;"><a href="calculator" target="_self" class="btn">Calculator</a></div>', unsafe_allow_html=True)
 # ----------------------------
 # Utilities
 # ----------------------------
