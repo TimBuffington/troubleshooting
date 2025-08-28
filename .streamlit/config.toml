@@ -1,0 +1,11 @@
+[server]
+# Tell Streamlit which file is the main entry
+headless = true
+
+[theme]
+# Optional: enforce your app theme
+base = "dark"
+primaryColor = "#80BD47"   # Energy Green
+backgroundColor = "#111111"
+secondaryBackgroundColor = "#232325"
+textColor = "#FFFFFF"
