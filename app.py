@@ -247,17 +247,19 @@ header {
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown(
+    "<div class="app-title">EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
 st.markdown('<div class="app-title">EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
-st.markdown('<div class="muted">Select equipment, enter a code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
+    "<div class="muted">Select the drive, enter the fault code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
 st.write("")
 
 # ============================================================
-# 🟦 BLUE — Equipment / Fault Code / Search
+# 🟦 BLUE — Drive / Fault Code / Search
 # ============================================================
 with st.form("fc_form", clear_on_submit=False):
     c1, c2 = st.columns(2)
     with c1:
-        selected = st.selectbox("Equipment", UI_EQUIPMENTS, key="fc_equipment")
+        selected = st.selectbox("Drive", UI_EQUIPMENTS, key="fc_equipment")
     with c2:
         user_code_raw = st.text_input("Fault Code", placeholder="e.g., F91", key="fc_code_raw")
     submitted = st.form_submit_button("Search")
@@ -297,7 +299,7 @@ if submitted:
 #        🟩 GREEN  — radio (returns index) & buttons
 # ============================================================
 if st.session_state.get("fc_show_modal"):
-    with modal_ctx("Found in a different equipment"):
+    with modal_ctx("Found in a different drive type"):
         # 🟨 YELLOW — info
         st.info(st.session_state.get("fc_alt_prompt", "Match found elsewhere."))
 
