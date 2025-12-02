@@ -326,8 +326,7 @@ if st.session_state.get("fc_show_modal"):
 # ----------------------------
 # Result rendering
 # ----------------------------
-st.markdown("""
-<style>div[data-baseweb="menu"] li {
+st.markdown('</div>', unsafe_allow_html=True)
   color: var(--alpine-white) !important;
   font-family: Arial, Helvetica, sans-serif !important;
   font-weight: 700 !important;
