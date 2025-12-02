@@ -240,7 +240,7 @@ st.markdown("""
 <style>
 .Header {
     text-align: center;
-    font-size: 3.0rem;
+    font-size: 5.0rem;
     font-weight: bold;
     color: white;
     text-shadow: 2px 2px 4px #000; /* simple dark shadow */
