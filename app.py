@@ -235,8 +235,20 @@ def show_result(entry: dict):
 # ----------------------------
 # Header
 # ----------------------------
-st.markdown('text-align: center'>'<div class="app-title">EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
-st.markdown('text-align: center'>'<div class="muted">Select equipment, enter a code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
+st.markdown("""
+<style>
+header {
+    text-align: center;
+    color: white;
+    font-size: 5.0rem; /* increased by 3 units */
+    text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
+    font-weight: bold;
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown('<div class="app-title">EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
+st.markdown('<div class="muted">Select equipment, enter a code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
 st.write("")
 
 # ============================================================
