@@ -239,7 +239,7 @@ st.markdown("""
 <style>
 .app-title {
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 2.5rem;
     font-weight: bold;
     color: white;
     text-shadow: 2px 2px 4px #000; /* simple dark shadow */
