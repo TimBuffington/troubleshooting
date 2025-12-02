@@ -329,11 +329,6 @@ if st.session_state.get("fc_show_modal"):
 
   if st.session_state.get("fc_result"):
      show_result(st.session_state["fc_result"])
-
-     st.markdown('</div>', unsafe_allow_html=True)
-     color: var(--alpine-white) !important;
-     font-family: Arial, Helvetica, sans-serif !important;
-     font-weight: 700 !important;
    }
 
 # Tip
