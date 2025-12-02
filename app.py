@@ -250,21 +250,22 @@ with st.form("fc_form", clear_on_submit=False):
         user_code_raw = st.text_input("Fault Code", placeholder="e.g., F91", key="fc_code_raw")
     submitted = st.form_submit_button("Search")
 
-st.markdown("""
-<style>
-.line1 {
-    color: grey;
-    font-size: 3.9rem; /* increased by 3 units */
-    text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
-    font-weight: bold;
-}
-</style>
-""", unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    .line1 {
+        text-align: center;
+        color: grey;
+        font-size: 2.0rem; /* increased by 3 units */
+        text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
+        font-weight: bold;
+    }
+        </style>
+    """, unsafe_allow_html=True)
 
-st.markdown(
-    "<p class='line1'>Tip: You can type just the number (e.g., 91) or 'F91'.</p>",
-    unsafe_allow_html=True
-)
+    st.markdown(
+        "<p class='line1'>Tip: You can type just the number (e.g., 91) or 'F91'.</p>",
+        unsafe_allow_html=True
+    )
 
 
 # Search behavior
@@ -352,14 +353,9 @@ st.markdown("""
 .line2 {
     text-align: center;
     color: white;
-    font-size: 3.9rem; /* increased by 3 units */
+    font-size: 5.0rem; /* increased by 3 units */
+    text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
     font-weight: bold;
-
-    /* Energy green glow */
-    text-shadow:
-        0 0 8px rgb(128, 189, 71),
-        0 0 12px rgb(128, 189, 71),
-        0 0 18px rgb(128, 189, 71);
 }
 </style>
 """, unsafe_allow_html=True)
