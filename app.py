@@ -342,19 +342,19 @@ if st.session_state.get("fc_show_modal"):
 
 if st.session_state.get("fc_result"):
    show_result(st.session_state["fc_result"])
+   
    st.markdown("""
     <style>
-    .line1 {
+    .line2 {
         color: white;
-        font-size: 1.9rem;            /* increased by 1 unit */
-        text-shadow: 2px 2px 4px #000; /* dark shadow */
+        font-size: 3.9rem;            /* increased by 3 units */
+        text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
+        font-weight: bold;
     }
-    
-   
 
-st.markdown("<p class='line2'>For Service or Support, Call ANA Service at (562) 450-3570 Opt 3</p>", unsafe_allow_html=True)
 
-    
+st.markdown("<p class='line1'>Tip: You can type just the number (e.g., 91) or 'F91'.</p>", unsafe_allow_html=True)
+
 
 
 
