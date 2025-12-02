@@ -347,7 +347,7 @@ if st.session_state.get("fc_result"):
     <style>
     .line2 {
         color: white;
-        font-size: 3.9rem;            /* increased by 3 units */
+        font-size: 4rem;            /* increased by 3 units */
         text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
         font-weight: bold;
     }
