@@ -248,8 +248,8 @@ header {
 """, unsafe_allow_html=True)
 
 st.markdown("<div class='line1'>EBOSS® Fault Code Lookup </div>", unsafe_allow_html=True)
-
-st.markdown("<div class='line1'>Select the drive, enter the fault code (e.g., F91), then Search.</div>", unsafe_allow_html=True)st.write("")
+st.markdown("<div class='line1'>Select the drive, enter the fault code (e.g., F91), then Search.</div>", unsafe_allow_html=True)
+st.write("")
 
 # ============================================================
 # 🟦 BLUE — Drive / Fault Code / Search
