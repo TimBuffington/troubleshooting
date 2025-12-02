@@ -247,8 +247,8 @@ header {
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<p class='line1'>EBOSS® Fault Code Lookup </p>", unsafe_allow_html=True)
-st.markdown("<p class='line1'>Select the drive, enter the fault code (e.g., F91), then Search.</p>", unsafe_allow_html=True)
+st.markdown('d> class='line1'>EBOSS® Fault Code Lookup </d>", unsafe_allow_html=True)
+st.markdown('d> class='line1'>Select the drive, enter the fault code (e.g., F91), then Search.</d>", unsafe_allow_html=True)
 st.write("")
 
 # ============================================================
