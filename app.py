@@ -237,18 +237,6 @@ def show_result(entry: dict):
 # ----------------------------
 st.markdown("""
 <style>
-header {
-    text-align: center;
-    color: white;
-    font-size: 5.0rem; /* increased by 3 units */
-    text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
-    font-weight: bold;
-}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<style>
 .Header {
     text-align: center;
     font-size: 4rem;
