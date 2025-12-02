@@ -250,23 +250,6 @@ with st.form("fc_form", clear_on_submit=False):
         user_code_raw = st.text_input("Fault Code", placeholder="e.g., F91", key="fc_code_raw")
     submitted = st.form_submit_button("Search")
 
-    st.markdown("""
-    <style>
-    .line1 {
-        text-align: center;
-        color: grey;
-        font-size: 2.0rem; /* increased by 3 units */
-        text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
-        font-weight: bold;
-    }
-        </style>
-    """, unsafe_allow_html=True)
-
-    st.markdown(
-        "<p class='line1'>Tip: You can type just the number (e.g., 91) or 'F91'.</p>",
-        unsafe_allow_html=True
-    )
-
 
 # Search behavior
 if submitted:
@@ -361,7 +344,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown(
-    "<p class='line2'>For Service or Support, Call ANA Service at (562) 450-3570 Opt 3.</p>",
+    "<p class='line2'>For Service or Support, 
+    Call ANA Service at (562) 450-3570 Opt 3.</p>",
     unsafe_allow_html=True
 )
 
