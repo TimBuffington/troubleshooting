@@ -248,7 +248,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="app-title">EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
+st.markdown('<div class='app-title'>EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
 st.markdown('<div class="muted">Select equipment, enter a code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
 st.write("")
 # ============================================================
