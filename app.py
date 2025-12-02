@@ -370,5 +370,3 @@ if st.session_state.get("fc_result"):
         unsafe_allow_html=True
     )
 
-
-
