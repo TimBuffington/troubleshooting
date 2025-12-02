@@ -249,6 +249,19 @@ with st.form("fc_form", clear_on_submit=False):
     with c2:
         user_code_raw = st.text_input("Fault Code", placeholder="e.g., F91", key="fc_code_raw")
     submitted = st.form_submit_button("Search")
+    
+st.markdown("""
+    <style>
+    .line2 {
+        color: grey;
+        font-size: 3.9rem;            /* increased by 3 units */
+        text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
+        font-weight: bold;
+    }
+
+
+st.markdown("<p class='line1'>Tip: You can type just the number (e.g., 91) or 'F91'.</p>", unsafe_allow_html=True)
+
 
 # Search behavior
 if submitted:
@@ -336,16 +349,8 @@ if st.session_state.get("fc_result"):
         font-size: 1.9rem;            /* increased by 1 unit */
         text-shadow: 2px 2px 4px #000; /* dark shadow */
     }
-    .line2 {
-        color: white;
-        font-size: 3.9rem;            /* increased by 3 units */
-        text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
-        font-weight: bold;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-st.markdown("<p class='line1'>Tip: You can type just the number (e.g., 91) or 'F91'.</p>", unsafe_allow_html=True)
+    
+   
 
 st.markdown("<p class='line2'>For Service or Support, Call ANA Service at (562) 450-3570 Opt 3</p>", unsafe_allow_html=True)
 
