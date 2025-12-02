@@ -346,27 +346,22 @@ if st.session_state.get("fc_result"):
     st.markdown("""
     <style>
     .line2 {
-        color: white;
-        font-size: 4rem;            
-        text-shadow: 3px 3px 6px #000;
-        font-weight: bold;
-    }
-
-    .line1 {
         text-align: center;
         color: white;
-        font-size: 1.4rem;
+        font-size: 3.9rem;            /* increased by 3 units */
+        text-shadow: 3px 3px 6px #000; /* slightly bigger shadow */
+        0 0 8px rgb(128, 189, 71),
+        0 0 12px rgb(128, 189, 71),
+        0 0 18px rgb(128, 189, 71);
         font-weight: bold;
-        text-shadow:
-            0 0 8px rgb(128, 189, 71),
-            0 0 12px rgb(128, 189, 71),
-            0 0 18px rgb(128, 189, 71);
+ 
+            
     }
     </style>
     """, unsafe_allow_html=True)
 
     st.markdown(
-        "<p class='line1'>For Service or Support, Call ANA Service at (562) 450-3570 Opt 3.</p>",
+        "<p class='line2'>For Service or Support, Call ANA Service at (562) 450-3570 Opt 3.</p>",
         unsafe_allow_html=True
     )
 
