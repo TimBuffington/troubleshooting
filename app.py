@@ -344,9 +344,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown(
-    "<p class='line2'>For Service or Support:</p>",
-    "<p class='line2'>Call ANA Service at (562) 450-3570 Opt 3.</p>",
-    unsafe_allow_html=True
+    "<p class='line2'>For Service or Support:</p>", unsafe_allow_html=True)
+st.markdown(
+    "<p class='line2'>Call ANA Service at (562) 450-3570 Opt 3.</p>",unsafe_allow_html=True
 )
 
 
