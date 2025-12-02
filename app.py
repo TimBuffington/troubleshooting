@@ -343,7 +343,7 @@ if st.session_state.get("fc_show_modal"):
 if st.session_state.get("fc_result"):
     show_result(st.session_state["fc_result"])
     
-    st.markdown("""
+st.markdown("""
     <style>
     .line2 {
         text-align: center;
@@ -356,6 +356,5 @@ if st.session_state.get("fc_result"):
         font-weight: bold;
              
     }
-       st.markdown(
-        "<p class='line2'>For Service or Support, Call ANA Service at (562) 450-3570 Opt 3.</p>",unsafe_allow_html=True)    )
+st.markdown("<p class='line2'>For Service or Support, Call ANA Service at (562) 450-3570 Opt 3.</p>",unsafe_allow_html=True)    )
 
