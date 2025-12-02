@@ -348,11 +348,10 @@ if st.session_state.get("fc_result"):
     .line2 {
         color: white;
         font-size: 4rem;            
-        text-shadow: 3px 3px 6px #000; 
+        text-shadow: 3px 3px 6px #000;
         font-weight: bold;
     }
 
-    /* Centered + Energy Green Glow */
     .line1 {
         text-align: center;
         color: white;
@@ -370,7 +369,6 @@ if st.session_state.get("fc_result"):
         "<p class='line1'>For Service or Support, Call ANA Service at (562) 450-3570 Opt 3.</p>",
         unsafe_allow_html=True
     )
-
 
 
 
