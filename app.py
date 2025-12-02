@@ -249,7 +249,7 @@ header {
 
 st.markdown("""
 <style>
-.page_title {
+.Header {
     text-align: center;
     font-size: 4rem;
     font-weight: bold;
