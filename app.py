@@ -235,35 +235,38 @@ def show_result(entry: dict):
 # ----------------------------
 # Header
 # ----------------------------
-
 st.markdown("""
 <style>
-.Header {
+.app-title {
     text-align: center;
     font-size: 5.0rem;
     font-weight: bold;
     color: white;
     text-shadow: 2px 2px 4px #000; /* simple dark shadow */
 }
+
+.muted {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ccc;
+}
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class='app-title'>EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
+st.markdown('<div class="app-title">EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
 st.markdown('<div class="muted">Select equipment, enter a code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
 st.write("")
+
 # ============================================================
 # 🟦 BLUE — Drive / Fault Code / Search
 # ============================================================
-with st.form("fc_fst.markdown('<div class="app-title">EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
-st.markdown('<div class="muted">Select equipment, enter a code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
-st.write("")orm", clear_on_submit=False):
+with st.form("fc_form", clear_on_submit=False):
     c1, c2 = st.columns(2)
     with c1:
         selected = st.selectbox("Drive", UI_EQUIPMENTS, key="fc_equipment")
     with c2:
         user_code_raw = st.text_input("Fault Code", placeholder="e.g., F91", key="fc_code_raw")
     submitted = st.form_submit_button("Search")
-
 
 # Search behavior
 if submitted:
@@ -277,6 +280,7 @@ if submitted:
             for equip, table in FAULTS.items():
                 if equip != selected and code in table:
                     alts.append(table[code])
+
         if primary:
             st.session_state["fc_result"] = primary
             st.session_state["fc_show_modal"] = False
