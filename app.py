@@ -248,15 +248,15 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<div class='App+Title='>EBOSS® Fault Code Lookup</div>", unsafe_allow_html=True)
-
-st.markdown("<div class='muted'>Select the drive, enter the fault code (e.g., F91), then Search.</div>", unsafe_allow_html=True)
+st.markdown('<div class="app-title">EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
+st.markdown('<div class="muted">Select equipment, enter a code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
 st.write("")
-
 # ============================================================
 # 🟦 BLUE — Drive / Fault Code / Search
 # ============================================================
-with st.form("fc_form", clear_on_submit=False):
+with st.form("fc_fst.markdown('<div class="app-title">EBOSS® Fault Code Lookup</div>', unsafe_allow_html=True)
+st.markdown('<div class="muted">Select equipment, enter a code (e.g., F91), then Search.</div>', unsafe_allow_html=True)
+st.write("")orm", clear_on_submit=False):
     c1, c2 = st.columns(2)
     with c1:
         selected = st.selectbox("Drive", UI_EQUIPMENTS, key="fc_equipment")
